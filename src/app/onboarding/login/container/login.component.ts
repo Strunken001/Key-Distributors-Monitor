@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
   manufacturer = true;
   distributor = false;
   request: any;
+  showLoader = false;
 
   constructor(private loginService: LoginService,
     private toastr: ToastrService,
@@ -92,11 +93,6 @@ export class LoginComponent implements OnInit {
       console.log('form submitted');
       console.log(JSON.stringify(res));
       if (res.responseCode === '00') {
-        // this.toastr.show(res.responseDescription, 'Success!', {
-        //   positionClass: 'toast-bottom-right',
-        //   toastClass: 'alert alert-success alert-with-icon'
-        // });
-        // this.router.navigate(['Dashboard']);
         this.localStorageUserData(res);
       } else {
         this.toastr.show(res.responseDescription, 'Error', {
@@ -116,6 +112,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+    this.showLoader = true;
     this.request = {
       username: this.formDist.value.usernameDist,
       password: this.formDist.value.passwordDist,
@@ -124,16 +121,17 @@ export class LoginComponent implements OnInit {
     this.loginService.loginDistrib(this.request).subscribe((res: ResponseDist) => {
       console.log('form submitted');
       console.log(JSON.stringify(res));
+      this.showLoader = false;
       if (res.responseCode === '00') {
         this.toastr.show('You have successfully logged in', 'Success!', {
           positionClass: 'toast-bottom-right',
           toastClass: 'alert alert-success alert-with-icon'
         });
-        this.router.navigate(['Dashboard']);
+        this.router.navigate(['portal']);
       } else {
-        this.toastr.show(res.responseDescription, 'Error', {
+        this.toastr.success(res.responseDescription, 'Error', {
           positionClass: 'toast-bottom-right',
-          toastClass: 'alert alert-danger alert-with-icon'
+          toastClass: 'alert alert-danger alert-with-icon',
         });
         this.passwordDist.reset();
       }
@@ -144,12 +142,11 @@ export class LoginComponent implements OnInit {
     localStorage.clear();
     localStorage.setItem(this.USERINFORMATION, JSON.stringify(userinfo));
     localStorage.setItem(this.TOKEN, userinfo.userInfor.sessionId);
-    this.router.navigate(['DistributorProfiling']);
+    this.router.navigate(['portal']);
     this.toastr.show('You have successfully logged in', 'success', {
       positionClass: 'toast-bottom-right',
       toastClass: 'alert alert-success alert-with-icon'
     });
   }
-
 
 }

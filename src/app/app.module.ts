@@ -22,7 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot({toastClass: 'toast toast-bootstrap-compatibility-fix'})
   ],
   declarations: [
     AppComponent,

@@ -1,6 +1,4 @@
-<body class="app-ui" style="background: #4C4743;">
-    <div class="app-layout-canvas">
-      <div class="app-layout-container">
+<div class="app-ui" style="background: #4C4743;">
         <main class="app-layout-content">
           <!-- Page content -->
           <div class="page-content">
@@ -59,7 +57,7 @@
                           </label>
                         </div>
                       </div>
-                        <button type="submit" class="btn btn-primary btn-lg btn-block login_btn-app">Login <i class="fa fa-spinner fa-spin"></i></button>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block login_btn-app">Login <i class="fa fa-spinner fa-spin loader" *ngIf ="showLoader"></i></button>
                       </form>
   
                       <form [formGroup]="formDist" (ngSubmit)="SubmitFormDist()" *ngIf="distributor">
@@ -88,7 +86,9 @@
                             </label>
                           </div>
                         </div>
-                          <button type="submit" class="btn btn-primary btn-lg btn-block login_btn-app">Login <i class="fa fa-spinner fa-spin"></i></button>
+                          <button type="submit" class="btn btn-primary btn-lg btn-block login_btn-app">Login 
+                            <i class="fa fa-spinner fa-spin loader" *ngIf ="showLoader" ></i>
+                          </button>
                         </form>
                     </div>
                     <!-- .card-block -->
@@ -105,9 +105,6 @@
           </div>
           <!-- End page content -->
         </main>
-      </div>
-      <!-- .app-layout-container -->
-    </div>
     <!-- .app-layout-canvas -->
-  </body>
+  </div>
   

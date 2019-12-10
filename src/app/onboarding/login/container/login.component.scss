@@ -1,0 +1,324 @@
+.login_btn-app {
+	color: #fff;
+    background-color: #D94F00;
+    border-color: #D94F00;
+    padding: 10px 0;
+    font-size: 24px;
+    font-weight: normal;
+}
+
+.app-layout-canvas {
+	margin: 0 auto;
+	max-width: 1170px;
+	background-color: #f9f9f9;
+}
+
+.switch {
+	margin: 3px 0;
+}
+
+.switch input + span {
+	width: 54px;
+	height: 30px;
+	background-color: rgba(0, 20, 35, 0.038);
+	border-radius: 30px;
+	-webkit-transition: background-color 0.4s;
+	transition: background-color 0.4s;
+}
+
+.switch input + span:after {
+	top: 2px;
+	bottom: 2px;
+	left: 3px;
+	width: 26px;
+	background-color: #fff;
+	border-radius: 50%;
+	box-shadow: 1px 0 3px rgba(0, 0, 0, 0.1);
+	-webkit-transition: -webkit-transform 0.15s ease-out;
+	transition: -webkit-transform 0.15s ease-out;
+	transition: transform 0.15s ease-out;
+	transition: transform 0.15s ease-out, -webkit-transform 0.15s ease-out;
+}
+
+.switch input:checked + span {
+	background-color: #ddd;
+}
+
+.switch input:checked + span:after {
+	box-shadow: -2px 0 3px rgba(0, 0, 0, 0.1);
+	-webkit-transform: translate(23px, 0);
+	transform: translate(23px, 0);
+}
+
+/* CSS Switches Variations */
+.switch-sm {
+	margin: 8px 0 7px;
+	font-size: 18px;
+}
+.right{
+	float: right;
+}
+
+.switch-sm input + span {
+	width: 36px;
+	height: 20px;
+}
+
+.switch-sm input + span:after {
+	width: 16px;
+}
+
+.switch-sm input:checked + span:after {
+	-webkit-transform: translate(15px, 0);
+	transform: translate(15px, 0);
+}
+
+.switch-lg {
+	margin: 1px 0;
+}
+
+.switch-lg input + span {
+	width: 70px;
+	height: 34px;
+}
+
+.switch-lg input + span:after {
+	width: 30px;
+}
+
+.switch-lg input:checked + span:after {
+	-webkit-transform: translate(35px, 0);
+	transform: translate(35px, 0);
+}
+
+.switch-square input + span,
+.switch-square input + span:after {
+	border-radius: 0;
+}
+
+.switch-primary input:checked + span {
+	background-color: #FF5E3A;
+}
+
+.switch-info input:checked + span {
+	background-color: #5bc0de;
+}
+
+.switch-success input:checked + span {
+	background-color: #5cb85c;
+}
+
+.switch-warning input:checked + span {
+	background-color: #f0ad4e;
+}
+
+.switch-danger input:checked + span {
+	background-color: #d9534f;
+}
+
+.switch-app input:checked + span {
+	background-color: #FF5E3A;
+}
+
+.switch-green input:checked + span {
+	background-color: #FF5E3A;
+}
+
+/* Css Inputs */
+.css-input {
+	position: relative;
+	display: inline-block;
+	margin: 2px 0;
+	font-weight: 400;
+	cursor: pointer;
+}
+
+.css-input input {
+	position: absolute;
+	opacity: 0;
+}
+
+.css-input input + span {
+	position: relative;
+	display: inline-block;
+	margin-top: -3px;
+	margin-right: 3px;
+	vertical-align: middle;
+}
+
+.css-input input + span:after {
+	position: absolute;
+	content: '';
+}
+
+/* Card */
+.card {
+	margin-bottom: 24px;
+	border-radius: 3px;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.14);
+}
+
+.card:not([class*=""]) {
+	background-color: #fff;
+}
+
+/* Card links */
+a.card {
+	display: block;
+	font-weight: inherit;
+}
+
+a.card:not(.inverse) {
+	color: inherit;
+}
+
+a.card:not(.inverse):hover {
+	color: inherit;
+}
+
+/* Card with table */
+.card-table {
+	width: 100%;
+}
+
+.card-table td {
+	padding: 10px;
+	vertical-align: middle;
+}
+
+
+/* Card actions bar */
+.card-actions {
+	float: right;
+	line-height: 1.1153;
+	margin-bottom: 0;
+	margin-left: auto;
+	padding: 0;
+}
+
+.card-actions > li {
+	display: inline-block;
+	padding: 0;
+}
+
+.card-actions > li > a:not(.label),
+.card-actions > li > button {
+	color: #86939e;
+	display: inline-block;
+	padding: 0;
+	line-height: 1;
+	opacity: .7;
+	vertical-align: middle;
+	-webkit-transition: opacity 0.15s ease-out;
+	transition: opacity 0.15s ease-out;
+}
+
+.inverse .card-actions > li > a:not(.label), .inverse
+.card-actions > li > button {
+	color: #fff;
+}
+
+.card-actions > li > a:not(.label):hover,
+.card-actions > li > button:hover {
+	text-decoration: none;
+	opacity: 1;
+}
+
+.card-actions > li > a:not(.label):active,
+.card-actions > li > button:active {
+	opacity: .6;
+}
+
+.card-actions > li > span {
+	display: block;
+}
+
+.card.card-themed > .card-header .card-actions > li > span {
+	color: #fff;
+}
+
+.card-actions > li > .label {
+	line-height: 1.25;
+}
+
+.card-actions > li > a:focus {
+	text-decoration: none;
+	opacity: 1;
+}
+
+.card-actions > li > button {
+	background: none;
+	border: none;
+}
+
+.card-actions > li.active > a,
+.card-actions > li.open > button {
+	text-decoration: none;
+	opacity: 1;
+}
+
+.card-actions > li + li {
+	margin-left: 10px;
+}
+
+
+/* Card block */
+.card-block {
+	padding: 24px 24px;
+}
+
+.card-block:first-child {
+	border-top-right-radius: 3px;
+	border-top-left-radius: 3px;
+}
+
+.card-block > :first-child,
+.card-block > .row:first-child > [class*="col-"] > :first-child {
+	margin-top: 0;
+}
+
+.card-block > :last-child {
+	margin-bottom: 0;
+}
+
+.card-header + .card-block {
+	padding-top: 16px;
+}
+
+.page-content {
+	padding-top: 5%;
+	padding-bottom: 6%;
+}
+
+.container {
+	position: relative;
+	height: 100%;
+}
+
+.nav-tabs {
+    padding: 0px;
+}
+
+
+.nav-tabs .nav-link.active {
+    color: #fff;
+    border-color: #D94F00;
+    text-decoration: none;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    background-color: #D94F00;
+}
+
+.text-primary {
+    color: #D94F00 !important;
+}
+
+.loader {
+    float: right;
+    top: 25px !important;
+    width: 40%;
+}
+
+
+
