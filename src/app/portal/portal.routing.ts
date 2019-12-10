@@ -5,18 +5,22 @@ import { PortalComponent } from './container/portal.component';
 
 const routes: Routes = [
   {
-    path:'',
+    path: '',
     component: PortalComponent,
     children: [
       {
-        path:'',
-        redirectTo:'dashboard',
-        pathMatch:'full'
-        
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+
       },
       {
-        path:'dashboard',
+        path: 'dashboard',
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+      },
+      {
+        path: 'profiling',
+        loadChildren: () => import('./profiling/profiling.module').then(m => m.ProfilingModule)
       }
     ]
   }

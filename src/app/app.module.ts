@@ -7,6 +7,7 @@ import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
+import { ProfilingModule } from './portal/profiling/profiling.module';
 
 
 
@@ -22,7 +23,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    ToastrModule.forRoot({toastClass: 'toast toast-bootstrap-compatibility-fix'})
+    ToastrModule.forRoot({toastClass: 'toast toast-bootstrap-compatibility-fix'}),
+    ProfilingModule
   ],
   declarations: [
     AppComponent,
