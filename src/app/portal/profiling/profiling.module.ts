@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfilingRoutingModule } from './profiling-routing.module';
 import { ProfilingComponent } from './container/profiling.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatButtonModule,
   MatInputModule,
@@ -24,6 +24,7 @@ import {
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
+    ReactiveFormsModule
   ]
 })
 export class ProfilingModule { }

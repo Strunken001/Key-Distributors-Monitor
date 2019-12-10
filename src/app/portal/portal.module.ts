@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { PortalRoutingModule } from './portal.routing';
 import { PortalComponent } from './container/portal.component';
 import { ComponentsModule } from 'app/components/components.module';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+
 
 
 
@@ -13,7 +15,8 @@ import { ComponentsModule } from 'app/components/components.module';
     CommonModule,
     PortalRoutingModule,
     ComponentsModule,
-
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class PortalModule { }
