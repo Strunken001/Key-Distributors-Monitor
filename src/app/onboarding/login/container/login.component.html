@@ -1,0 +1,113 @@
+<body class="app-ui" style="background: #4C4743;">
+    <div class="app-layout-canvas">
+      <div class="app-layout-container">
+        <main class="app-layout-content">
+          <!-- Page content -->
+          <div class="page-content">
+            <div class="container">
+              <div class="row">
+                <!-- Login card -->
+                <div class="col-md-5" style="float: none; margin: 0 auto;">
+                  <div class="card">
+                    <div class="card-block" style="display: flex;justify-content: center;">
+                      <img src="assets/img/logo/gtb.svg" />
+                    </div>
+                    <div class="Col-md-6 card-block"
+                      style="float: none; margin: 0px 20px; text-align: center;border-bottom: 1px solid #D6D6D6;">
+                      <h2 class="kd">KD <span>Monitor</span></h2>
+                    </div>
+                    <!-- <h3 class="card-header">Login</h3> -->
+                    <div class="card-block">
+                        <nav class="mb-3 w-100">
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                              <a class="nav-item nav-link w-50 text-center" id="nav-home-tab" (click) ="manufacturer = true; distributor = false" [ngClass] = "{'active':manufacturer === true }"
+                              data-toggle="tab"  href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Manufacturer</a>
+                              <a class="nav-item nav-link w-50 text-center" id="nav-profile-tab" (click) ="distributor = true;manufacturer = false;" [ngClass] = "{'active':distributor === true }" [attr.disabled] = 'false'
+                              data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Distributor</a>
+                            </div>
+                          </nav>
+  
+                      <form [formGroup]="form" (ngSubmit)="SubmitForm()" *ngIf="manufacturer">
+  
+                        <!-- <pre>{{accessCode.touched | json}}</pre>
+                        <pre>{{accessCode.invalid | json}}</pre>
+                        <pre>{{accessCode.errors | json}}</pre> -->
+                        <div style="min-height: 250px;">
+                        <div class="form-group">
+                          <label class="sr-only" for="access_Code">Access Code</label>
+                          <input type="text" class="form-control" id="accessCode" placeholder="Access Code" formControlName="accessCode" appDisableControl="disable" />
+                          <span *ngIf="accessCode.touched && accessCode.invalid && accessCode.hasError('required')" class="small text-danger">Access Code is required</span>
+                        </div>
+  
+                        <div class="form-group">
+                          <label class="sr-only" for="Username">User Name</label>
+                          <input type="text" class="form-control" id="username" placeholder="User Name" formControlName="username" />
+                          <span *ngIf="username.touched && username.invalid && username.hasError('required')" class="small text-danger">User Name is required</span>
+                        </div>
+                        <div class="form-group">
+                          <label class="sr-only" for="password">Password</label>
+                          <input type="password" class="form-control" id="password"
+                            placeholder="Password" formControlName="password" />
+                            <span *ngIf="password.touched && password.invalid && password.hasError('required')" class="small text-danger">Password is required</span>
+                        </div>
+                        <div class="mb-2">
+                          <label for="frontend_login_remember" class="css-input switch switch-sm switch-app">
+                            <input type="checkbox" id="frontend_login_remember" /><span></span> Remember me
+                          </label>
+                          <label class="css-input text-primary switch switch-sm switch-app right">
+                            Forgot Password
+                          </label>
+                        </div>
+                      </div>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block login_btn-app">Login <i class="fa fa-spinner fa-spin"></i></button>
+                      </form>
+  
+                      <form [formGroup]="formDist" (ngSubmit)="SubmitFormDist()" *ngIf="distributor">
+  
+                          <!-- <pre>{{accessCode.touched | json}}</pre>
+                          <pre>{{accessCode.invalid | json}}</pre>
+                          <pre>{{accessCode.errors | json}}</pre> -->
+                          <div style="min-height: 250px;">
+                          <div class="form-group">
+                            <label class="sr-only" for="Username">User Name</label>
+                            <input type="text" class="form-control" id="usernameDist" placeholder="User Name" formControlName="usernameDist" />
+                            <span *ngIf="usernameDist.touched && usernameDist.invalid && usernameDist.hasError('required')" class="small text-danger">User Name is required</span>
+                          </div>
+                          <div class="form-group">
+                            <label class="sr-only" for="password">Password</label>
+                            <input type="password" class="form-control" id="passwordDist"
+                              placeholder="Password" formControlName="passwordDist" />
+                              <span *ngIf="passwordDist.touched && passwordDist.invalid && passwordDist.hasError('required')" class="small text-danger">Password is required</span>
+                          </div>
+                          <div class="mb-2">
+                            <label for="frontend_login_remember" class="css-input switch switch-sm switch-app">
+                              <input type="checkbox" id="frontend_login_remember" /><span></span> Remember me
+                            </label>
+                            <label class="css-input text-primary switch switch-sm switch-app right">
+                              Forgot Password
+                            </label>
+                          </div>
+                        </div>
+                          <button type="submit" class="btn btn-primary btn-lg btn-block login_btn-app">Login <i class="fa fa-spinner fa-spin"></i></button>
+                        </form>
+                    </div>
+                    <!-- .card-block -->
+                  </div>
+                  <!-- .card -->
+                </div>
+                <!-- .col-md-6 -->
+                <!-- End login -->
+  
+              </div>
+              <!-- .row -->
+            </div>
+            <!-- .container -->
+          </div>
+          <!-- End page content -->
+        </main>
+      </div>
+      <!-- .app-layout-container -->
+    </div>
+    <!-- .app-layout-canvas -->
+  </body>
+  
