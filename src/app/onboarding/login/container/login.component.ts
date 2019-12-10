@@ -127,7 +127,7 @@ export class LoginComponent implements OnInit {
           positionClass: 'toast-bottom-right',
           toastClass: 'alert alert-success alert-with-icon'
         });
-        this.router.navigate(['portal']);
+        this.router.navigate(['/portal/dashboard']);
       } else {
         this.toastr.success(res.responseDescription, 'Error', {
           positionClass: 'toast-bottom-right',
