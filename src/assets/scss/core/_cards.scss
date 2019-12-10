@@ -199,7 +199,7 @@
     &.bg-danger,
     &.card-rotate.bg-danger .front,
     &.card-rotate.bg-danger .back{
-      background: linear-gradient(60deg, $red-400, $red-600);
+      background: linear-gradient(60deg, $red-500, $red-500);
     }
 
     .card-header-rose .card-icon,
@@ -462,8 +462,8 @@
     }
 
     .stats{
-      color: #999999;
-      font-size: 12px;
+      color: #0c0c0c;
+      font-size: 20px;
       line-height: 22px;
 
       .card-category{
