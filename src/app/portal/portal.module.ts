@@ -12,7 +12,8 @@ import { ComponentsModule } from 'app/components/components.module';
   imports: [
     CommonModule,
     PortalRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+
   ]
 })
 export class PortalModule { }
