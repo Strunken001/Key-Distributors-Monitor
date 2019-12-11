@@ -10,8 +10,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProfilingModule } from './portal/profiling/profiling.module';
 
 
-
-
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -24,7 +22,7 @@ import { ProfilingModule } from './portal/profiling/profiling.module';
     FormsModule,
     ReactiveFormsModule,
     ToastrModule.forRoot({toastClass: 'toast toast-bootstrap-compatibility-fix'}),
-    ProfilingModule
+    ProfilingModule,
   ],
   declarations: [
     AppComponent,
