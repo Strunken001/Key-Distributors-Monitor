@@ -5,6 +5,7 @@ import { DashboardRoutingModule } from './dashboard.routing';
 import { DashboardComponent } from './container/dashboard.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { MaterialUiModule } from 'Utilities/_material/material-ui.module';
+import { ComponentsModule } from 'app/components/components.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { MaterialUiModule } from 'Utilities/_material/material-ui.module';
     CommonModule,
     DashboardRoutingModule,
     NgApexchartsModule,
-    MaterialUiModule
+    MaterialUiModule,
+    ComponentsModule
 
   ]
 })
