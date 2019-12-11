@@ -4,14 +4,8 @@ import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from './dashboard.routing';
 import { DashboardComponent } from './container/dashboard.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import {
-  MatButtonModule,
-  MatInputModule,
-  MatRippleModule,
-  MatFormFieldModule,
-  MatTooltipModule,
-  MatSelectModule
-} from '@angular/material';
+import { MaterialUiModule } from 'Utilities/_material/material-ui.module';
+
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -19,12 +13,8 @@ import {
     CommonModule,
     DashboardRoutingModule,
     NgApexchartsModule,
-    MatButtonModule,
-    MatRippleModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatTooltipModule
+    MaterialUiModule
+
   ]
 })
 export class DashboardModule { }

@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfilingModule } from './portal/profiling/profiling.module';
+import { MaterialUiModule } from 'Utilities/_material/material-ui.module';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { ProfilingModule } from './portal/profiling/profiling.module';
     ReactiveFormsModule,
     ToastrModule.forRoot({toastClass: 'toast toast-bootstrap-compatibility-fix'}),
     ProfilingModule,
+    MaterialUiModule
   ],
   declarations: [
     AppComponent,
