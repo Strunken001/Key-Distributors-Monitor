@@ -6,7 +6,7 @@ import { FacilitystatsComponent } from './container/facilitystats.component';
 import { Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // tslint:disable-next-line: max-line-length
-import { MatButtonModule, MatRippleModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatTooltipModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
+import { MatButtonModule, MatRippleModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatTooltipModule, MatDatepickerModule, MatNativeDateModule, MatDividerModule } from '@angular/material';
 import { NgApexchartsModule } from 'ng-apexcharts';
 
 
@@ -25,7 +25,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDividerModule
   ]
 })
 export class FacilitystatsModule { }
