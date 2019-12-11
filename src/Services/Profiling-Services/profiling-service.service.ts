@@ -85,16 +85,10 @@ export class ProfilingServiceService {
       map(res => {
         console.log(res);
         if (res.ResponseCode === '00') {
-          this.toaster.show(res.responseDescription, 'Success!', {
-            positionClass: 'toast-bottom-right',
-            toastClass: 'alert alert-success alert-with-icon'
-          });
+          console.log(res.responseDescription);
           return res;
         } else {
-          this.toaster.show(res.responseDescription, 'Error!', {
-            positionClass: 'toast-bottom-right',
-            toastClass: 'alert alert-danger alert-with-icon'
-          });
+          console.log(res.responseDescription);
           return null;
         }
       })
