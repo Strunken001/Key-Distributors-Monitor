@@ -17,6 +17,16 @@ export interface LoginDist {
   SessionId: string;
 }
 
+export interface FetchPrincipals {
+  allPrincipals: [
+    {
+      id: string,
+      customerID: string,
+      userID: string
+    }
+  ];
+}
+
 export interface ResponseDist {
   userId: string;
   distributorCode: string;

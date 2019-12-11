@@ -1,9 +1,9 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <mat-form-field class="card card-chart">
-                    <div class="card-header card-header-warning">
+                    <div class="card-header card-header-danger">
                         <div class="ct-chart" id="websiteViewsChart">
                             <mat-label>Principal</mat-label>
                         </div>
@@ -19,9 +19,9 @@
                 </mat-form-field>
 
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                     <mat-form-field class="card card-chart">
-                        <div class="card-header card-header-warning">
+                        <div class="card-header card-header-danger">
                             <div class="ct-chart" id="websiteViewsChart">
                                 <mat-label>Distributors</mat-label>
                             </div>
@@ -37,7 +37,7 @@
                     </mat-form-field>
     
                 </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card card-chart">
                     <div class="card-header card-header-danger">
                         <div class="ct-chart" id="completedTasksChart"></div>
@@ -139,12 +139,16 @@
         <div class="row">
             <div class="col-lg-8 col-md-14">
                 <div class="card">
+                        <div class="card-header card-header-danger">
+                                <h4 class="card-title">Distributor Stats</h4>
+                                <p class="card-category">New employees on 15th September, 2016</p>
+                            </div>
                     <apx-chart [series]="options.series" [chart]="options.chart"></apx-chart>
                 </div>
             </div>
             <div class="col-lg-4 col-md-10">
                 <div class="card">
-                    <div class="card-header card-header-warning">
+                    <div class="card-header card-header-danger">
                         <h4 class="card-title">Employees Stats</h4>
                         <p class="card-category">New employees on 15th September, 2016</p>
                     </div>

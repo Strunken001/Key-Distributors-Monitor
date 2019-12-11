@@ -63,7 +63,7 @@ export class DashboardComponent implements OnInit {
 
   options2 = {
     chart: {
-      height: 250,
+      height: 210,
       type: 'radialBar',
     },
     plotOptions: {
