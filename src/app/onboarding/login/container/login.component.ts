@@ -90,6 +90,7 @@ export class LoginComponent implements OnInit {
     // this.loginForm.form.markAllAsTouched();
     console.log('form value' + JSON.stringify(this.form.value));
     this.loginService.login(this.form.value).subscribe((res: User) => {
+      this.showLoader = false;
       console.log('form submitted');
       console.log(JSON.stringify(res));
       if (res.responseCode === '00') {

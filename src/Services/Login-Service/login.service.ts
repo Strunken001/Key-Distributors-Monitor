@@ -69,5 +69,12 @@ export class LoginService {
       );
     }
 
+    clear(): void {
+      localStorage.clear();
+    }
 
+    logout(): void {
+      this.clear();
+      this.router.navigate(['onboarding/login']);
+    }
 }

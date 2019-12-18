@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { EncryptionService } from '../utility-Services/encryption.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { retry, catchError, map } from 'rxjs/operators';
+import { retry, catchError, map, distinctUntilChanged, switchMap, shareReplay } from 'rxjs/operators';
 import { ErrorHandlingService } from '../utility-Services/error-handling.service';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'environments/environment';
+import { ResponsePrincipals, AllPrincipal, ResponseDistributor, AllDistributor } from 'Utilities/_models/Interface';
+import { Observable } from 'rxjs/internal/Observable';
+import { timer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +16,8 @@ export class ProfilingServiceService {
   // RequestId: string;
   // Channel: string;
   // UserId: string;
+  public paymentCategoriesCache$: Observable<AllPrincipal[]>;
+  public distributorCategoriesCache$: Observable<AllDistributor[]>;
   constructor(private enc: EncryptionService, private toaster: ToastrService,
     private http: HttpClient, private errorhandler: ErrorHandlingService) { }
 
@@ -65,8 +70,8 @@ export class ProfilingServiceService {
     }
   }
 
-  fetchPrincipals() {
-    const rawreq = this.enc.getRequestID;
+  private fetchPrincipals() {
+    const rawreq = this.enc.getRequestID();
     console.log('Principal Request ID::' + JSON.stringify(rawreq));
     const userDetails = localStorage.getItem('userInformation');
     const userObj = JSON.parse(userDetails);
@@ -77,23 +82,84 @@ export class ProfilingServiceService {
       UserId: this.enc.encrypt(userObj.userInfor.userID)
 
     };
-    console.log('Data for distributor profiling:' + JSON.stringify(userRequest));
+    console.log('Data for Principal profiling:' + JSON.stringify(userRequest));
     return this.http.post<any>(PATH, userRequest).pipe(
       retry(2),
       catchError(this.errorhandler.handleError),
       // tslint:disable-next-line: no-shadowed-variable
-      map(res => {
-        console.log(res);
-        if (res.ResponseCode === '00') {
-          console.log(res.responseDescription);
-          return res;
+      map((res: ResponsePrincipals) => {
+        if (res.responseCode === '00') {
+          console.log('Principal ' + JSON.stringify(res.allPrincipals) )
+          return res.allPrincipals;
         } else {
-          console.log(res.responseDescription);
+          console.log('fail ' + JSON.stringify(res) )
           return null;
         }
       })
     );
 
+  }
+
+  private fetchDistributors() {
+    const rawreq = this.enc.getRequestID();
+    console.log('Destributor Request ID::' + JSON.stringify(rawreq));
+    const userDetails = localStorage.getItem('userInformation');
+    const userObj = JSON.parse(userDetails);
+    const PATH = `${environment.BASE_URL}${environment.KDMonitor_Api}${'/FetchAllDistributors'}`;
+    const userRequest: any = {
+      RequestId: this.enc.encrypt(this.enc.getRequestID()),
+      Channel: 'KD',
+      UserId: this.enc.encrypt(userObj.userInfor.userID),
+      PrincipalCode: this.enc.encrypt(userObj.userInfor.customerID)
+
+    };
+    console.log('Data for distributor profiling:' + JSON.stringify(userRequest));
+    return this.http.post<any>(PATH, userRequest).pipe(
+      retry(2),
+      catchError(this.errorhandler.handleError),
+      // tslint:disable-next-line: no-shadowed-variable
+      map((res: ResponseDistributor) => {
+        if (res.responseCode === '00') {
+          console.log('Principal ' + JSON.stringify(res.allDistributors) )
+          return res.allDistributors;
+        } else if (res.responseCode === '25') {
+          res.allDistributors =  [
+
+          ];
+          return res.allDistributors;
+        } else {
+          console.log('fail ' + JSON.stringify(res) )
+          return null;
+        }
+      })
+    );
+
+  }
+
+  get categories() {
+    if (!this.paymentCategoriesCache$) {
+       // this.paymentService.paymentInfo$.next('loading payment categories..');
+      const timer$ = timer(0, environment.CACHE_SIZE); // timer that determines the interval before data refresh from server
+      this.paymentCategoriesCache$ = timer$.pipe(
+        distinctUntilChanged(),
+        switchMap(_ => this.fetchPrincipals()), // Observable operator that makes data refresh
+        shareReplay(environment.CACHE_SIZE) // Observable operator that handles caching
+      );
+    }
+    return this.paymentCategoriesCache$;
+  }
+
+  get distributors() {
+    if (!this.distributorCategoriesCache$) {
+       // this.paymentService.paymentInfo$.next('loading payment categories..');
+      const timer$ = timer(0, environment.CACHE_SIZE); // timer that determines the interval before data refresh from server
+      this.distributorCategoriesCache$ = timer$.pipe(
+        distinctUntilChanged(),
+        switchMap(_ => this.fetchDistributors()), // Observable operator that makes data refresh
+        shareReplay(environment.CACHE_SIZE) // Observable operator that handles caching
+      );
+    }
+    return this.distributorCategoriesCache$;
   }
 
 }

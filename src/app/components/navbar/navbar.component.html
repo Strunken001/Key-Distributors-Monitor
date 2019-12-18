@@ -30,7 +30,7 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="javascript:void(0)">Password reset</a>
                         <a class="dropdown-item" [routerLink]="['/portal/profiling']"  href="javascript:void(0)">Profile</a>
-                        <a class="dropdown-item" [routerLink]="['/onboarding/login']" href="javascript:void(0)">Logout</a>
+                        <a class="dropdown-item" (click) ="loginService.logout()" href="javascript:void(0)">Logout</a>
                     </div>
                 </li>
             </ul>

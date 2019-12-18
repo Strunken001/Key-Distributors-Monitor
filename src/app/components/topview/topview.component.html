@@ -6,11 +6,11 @@
                         Principal
                     </div>
                 </div>
-                <mat-form-field class="card-body">
+                <mat-form-field *ngIf="profileserv.categories | async as data" class="card-body">
                     <mat-label>Principals</mat-label>
                     <mat-select>
-                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                            {{food.viewValue}}
+                        <mat-option *ngFor="let food of data" [value]="food.id">
+                            {{food.customerID}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -23,11 +23,11 @@
                         Distributors
                     </div>
                 </div>
-                <mat-form-field class="card-body">
+                <mat-form-field *ngIf="profileserv.distributors | async as data" class="card-body">
                     <mat-label>Distributors</mat-label>
                     <mat-select>
-                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                            {{food.viewValue}}
+                        <mat-option *ngFor="let food of data" [value]="food.distributorCode">
+                            {{food.distributorName}}
                         </mat-option>
                     </mat-select>
 

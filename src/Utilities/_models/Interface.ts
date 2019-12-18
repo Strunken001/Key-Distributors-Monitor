@@ -17,14 +17,30 @@ export interface LoginDist {
   SessionId: string;
 }
 
-export interface FetchPrincipals {
-  allPrincipals: [
-    {
-      id: string,
-      customerID: string,
-      userID: string
-    }
-  ];
+export interface ResponsePrincipals {
+  allPrincipals: AllPrincipal[];
+  responseCode: string;
+  responseDescription: string;
+  requestId: string;
+}
+
+export interface AllPrincipal {
+  id: string;
+  customerID: string;
+  userID: string;
+}
+
+export interface ResponseDistributor {
+  distributorCount: string;
+  allDistributors: AllDistributor[];
+  responseCode: string;
+  responseDescription: string;
+  requestId: string;
+}
+
+export interface AllDistributor {
+  distributorName: string;
+  distributorCode: string;
 }
 
 export interface ResponseDist {
@@ -44,6 +60,20 @@ export interface User {
 }
 
 export interface Profiledist {
+  responseCode: string;
+  responseDescription: string;
+  requestId: string;
+}
+
+export interface StockResponse {
+  stockValue: string;
+  tradeDebt: string;
+  totalStock: string;
+  distributorCode?: any;
+  availedFacilityAmount: string;
+  usedFacilityAmount: string;
+  percentageUtilization: string;
+  percentageEfficiency: string;
   responseCode: string;
   responseDescription: string;
   requestId: string;

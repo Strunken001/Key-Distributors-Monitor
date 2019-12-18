@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProfilingServiceService } from '../../../../Services/Profiling-Services/profiling-service.service';
-import { Profiledist, FetchPrincipals } from '../../../../Utilities/_models/Interface';
+import { Profiledist, ResponsePrincipals } from '../../../../Utilities/_models/Interface';
 import { FormValidators } from '../../../../Utilities/FormValidation';
 
 @Component({
@@ -21,11 +21,10 @@ export class ProfilingComponent implements OnInit {
     {name: 'Something else here'},
     {name: 'Separated link'}
    ];
-  constructor(private formBuilder: FormBuilder, private router: Router, private profileserv: ProfilingServiceService) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, public profileserv: ProfilingServiceService) { }
 
   ngOnInit() {
     this.createProfilingForm();
-    this.fetchPrincipals();
   }
 
   private createProfilingForm() {
@@ -69,16 +68,4 @@ export class ProfilingComponent implements OnInit {
     });
   }
 
-  public fetchPrincipals() {
-
-    const userDetails = localStorage.getItem('userInformation');
-    const userObj = JSON.parse(userDetails);
-    console.log('UserID is: ' + JSON.stringify(userObj.userInfor.userID));
-    const manufID =  JSON.stringify(userObj.userInfor.userID);
-
-    this.profileserv.fetchPrincipals().subscribe((a: FetchPrincipals) => {
-      console.log(a);
-      // this.profileserv.setUserObject(a);
-    })
-  }
 }

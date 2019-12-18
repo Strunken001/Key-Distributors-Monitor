@@ -16,11 +16,11 @@
                                         <option *ngFor="let option of options" [ngValue]="option">{{option.name}}</option>
                                    
                                 </select> -->
-                                <mat-form-field class="col-md-10">
+                                <mat-form-field *ngIf="profileserv.categories | async as data" class="col-md-10">
                                     <mat-label>Select Principal</mat-label>
                                     <mat-select [(ngModel)]="selectedOption" formControlName="principal">
-                                        <mat-option *ngFor="let option of options" [value]="option">
-                                            {{option.name}}
+                                        <mat-option *ngFor="let option of data" [value]="option.id">
+                                            {{option.customerID}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>

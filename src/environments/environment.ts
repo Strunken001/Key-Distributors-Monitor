@@ -15,7 +15,8 @@ export const environment = {
   CHANNEL: 'gaps',
   KDChannel: 'KD',
   CHANNEL_SHORTNAME: 'GP',
-
+  REFRESH_INTERVAL: 100000,
+  CACHE_SIZE: 100000,
   // tslint:disable-next-line:max-line-length
   PUB_ENC_KEY: `MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCRA67mG4zCbKULFvEyn0UafxPNOO42qk3U0Qg2WOTp6l0EOz9ZiHW4fDMHrOcIlPIvwOjkHWpI1VSi1H/I6zbgkDwRGu/OYQ2Eih9YeYwL9DcmbNoe8uXTIwVLtWS7OW/wtLQz+vup/vHTeIWPs0Y+LDcO7BcOGLli53GwqZC+3QIDAQAB`,
 
