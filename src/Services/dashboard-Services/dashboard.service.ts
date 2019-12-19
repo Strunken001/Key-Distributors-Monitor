@@ -6,6 +6,8 @@ import { StockResponse } from 'Utilities/_models/Interface';
 import { catchError, retry, map, switchMap, shareReplay, distinctUntilChanged } from 'rxjs/operators';
 import { ErrorHandlingService } from 'Services/utility-Services/error-handling.service';
 import { timer, Observable } from 'rxjs';
+import { RolesService } from 'Services/utility-Services/roles.service';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +15,11 @@ import { timer, Observable } from 'rxjs';
 export class DashboardService {
   public StocDetailsCache$: Observable<StockResponse>;
   constructor(private enc: EncryptionService, private http: HttpClient,
-    private errorhandler: ErrorHandlingService) { }
+    private errorhandler: ErrorHandlingService, private roles: RolesService,
+    public datepipe: DatePipe) { }
 
-  private fetchStockDetails() {
+  fetchStockDetails(startDate?: any, endDate?: any, code?: any, type?: any) {
+    const date = new Date();
     const userDetails = localStorage.getItem('userInformation');
     const userObj = JSON.parse(userDetails);
     const PATH = `${environment.BASE_URL}${environment.KDMonitor_Api}${'/FetchStockDetails'}`;
@@ -23,10 +27,10 @@ export class DashboardService {
       RequestId: this.enc.encrypt(this.enc.getRequestID()),
       Channel: environment.KDChannel,
       SessionId: '',
-      StaffId: this.enc.encrypt(userObj.userInfor.userID),
-      StartDate: '2019-01-01',
-      EndDate: '2019-12-12',
-      User: 'STAFF'
+      Code: code ? this.enc.encrypt(code) : this.enc.encrypt(this.roles.getCodeOnLogin()),
+      StartDate: startDate ? startDate : this.datepipe.transform(date.setDate(7), 'yyyy-MM-dd') ,
+      EndDate: endDate ? endDate : this.datepipe.transform(Date.now(), 'yyyy-MM-dd') ,
+      User: type ? type : this.roles.DetermineRoles()
     };
     console.log('Stock request ' + JSON.stringify(userRequest))
     return this.http.post<any>(PATH, userRequest).pipe(
@@ -46,13 +50,16 @@ export class DashboardService {
     );
   }
 
-  get stock() {
+  stock(startDate?: any, endDate?: any, code?: any, type?: any) {
     if (!this.StocDetailsCache$) {
        // this.paymentService.paymentInfo$.next('loading payment categories..');
       const timer$ = timer(0, environment.CACHE_SIZE); // timer that determines the interval before data refresh from server
       this.StocDetailsCache$ = timer$.pipe(
         distinctUntilChanged(),
-        switchMap(_ => this.fetchStockDetails()), // Observable operator that makes data refresh
+        // switchMap(_ => startDate && endDate &&
+        //   code ? this.fetchStockDetails()
+        //   : this.fetchStockDetails(startDate, endDate, code)),
+          switchMap(_ => this.fetchStockDetails(startDate, endDate, code, type)), // Observable operator that makes data refresh
         shareReplay(environment.CACHE_SIZE) // Observable operator that handles caching
       );
     }

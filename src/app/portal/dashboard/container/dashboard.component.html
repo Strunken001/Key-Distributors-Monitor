@@ -1,7 +1,16 @@
 <div class="main-content">
     <div class="container-fluid">
-    <app-topview></app-topview>
-    <app-fetch-stock></app-fetch-stock>
+
+        <!-- TOP VIEW COMPONENT STARTS HERE -->
+        <app-topview [prinForm]="prinForm" [disForm]="disForm" [startDate]="startDate" [endDate]="endDate"
+            (triggerFilter)="getStockDetails($event)">
+        </app-topview>
+        <!-- TOP VIEW COMPONENT ENDS HERE-->
+
+        <!-- FETCH STOCK COMPONENT STARTS HERE -->
+        <app-fetch-stock [allStocks$]="allStocks$"></app-fetch-stock>
+        <!-- FETCH STOCK COMPOENT ENDS HERE-->
+
         <div class="row">
             <div class="col-lg-8 col-md-14">
                 <div class="card">

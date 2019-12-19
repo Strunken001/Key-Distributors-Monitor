@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
 
   TOKEN = 'sessionId';
   USERINFORMATION = 'userInformation';
+  DISTRIBINFORMATION = 'distribInformation';
 
   form: FormGroup;
   formDist: FormGroup;
@@ -87,6 +88,7 @@ export class LoginComponent implements OnInit {
       FormValidators.validateAllFormFields(this.form);
       return;
     }
+    this.showLoader = true;
     // this.loginForm.form.markAllAsTouched();
     console.log('form value' + JSON.stringify(this.form.value));
     this.loginService.login(this.form.value).subscribe((res: User) => {
@@ -124,6 +126,8 @@ export class LoginComponent implements OnInit {
       console.log(JSON.stringify(res));
       this.showLoader = false;
       if (res.responseCode === '00') {
+        this.loginService.clear();
+        localStorage.setItem(this.DISTRIBINFORMATION, JSON.stringify(res));
         this.toastr.show('You have successfully logged in', 'Success!', {
           positionClass: 'toast-bottom-right',
           toastClass: 'alert alert-success alert-with-icon'

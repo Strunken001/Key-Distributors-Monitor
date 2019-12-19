@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ResponseDistributor, AllDistributor, User } from 'Utilities/_models/Interface';
 import { ProfilingServiceService } from 'Services/Profiling-Services/profiling-service.service';
 import { JsonPipe } from '@angular/common';
 import { RolesService } from 'Services/utility-Services/roles.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-topview',
@@ -17,6 +18,12 @@ export class TopviewComponent implements OnInit {
   isDistributor = true;
   isPrincipal = true;
   isStaff = true;
+
+  @Output() triggerFilter: EventEmitter<any> = new EventEmitter<any>();
+  @Input() prinForm: FormControl;
+  @Input() disForm: FormControl;
+  @Input() startDate: FormControl;
+  @Input() endDate: FormControl;
 
   constructor(public profileserv: ProfilingServiceService,
     public roleServ: RolesService) {
@@ -33,6 +40,7 @@ export class TopviewComponent implements OnInit {
       this.isDistributor = false;
     } else {
       this.isPrincipal = false;
+      this.onSelected(this.roleServ.getCodeOnLogin())
     }
   }
 
@@ -68,4 +76,7 @@ export class TopviewComponent implements OnInit {
   //   })
   // }
 
+  getStockDetails() {
+    this.triggerFilter.emit();
+  }
 }

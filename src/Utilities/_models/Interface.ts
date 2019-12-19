@@ -74,6 +74,7 @@ export interface StockResponse {
   usedFacilityAmount: string;
   percentageUtilization: string;
   percentageEfficiency: string;
+  distributorCount: string;
   responseCode: string;
   responseDescription: string;
   requestId: string;

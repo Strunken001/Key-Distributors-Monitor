@@ -9,6 +9,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfilingModule } from './portal/profiling/profiling.module'
 import { MaterialUiModule } from 'Utilities/_material/material-ui.module';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -30,7 +31,7 @@ import { MaterialUiModule } from 'Utilities/_material/material-ui.module';
     AppComponent,
 
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

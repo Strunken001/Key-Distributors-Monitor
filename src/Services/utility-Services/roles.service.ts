@@ -7,9 +7,8 @@ import { User } from 'Utilities/_models/Interface';
 export class RolesService {
   customerID = '';
   userDetails: User;
-  isDistributor = false;
-  isPrincipal = false;
-  isStaff = false;
+  roles = '';
+  code = '';
   constructor() {
   }
 
@@ -19,14 +18,35 @@ export class RolesService {
       this.customerID  = JSON.parse(user).userInfor.customerID;
       console.log('roles ' + this.customerID)
     }
-
     if (this.customerID === '100000') {
-      this.isStaff = true
+     this.roles = 'STAFF'
     } else if (this.customerID === '' ) {
-      this.isDistributor = true;
+      this.roles = 'DISTRIBUTOR';
     } else {
-      this.isPrincipal = true;
+      this.roles = 'PRINCIPAL';
     }
+
+    return this.roles;
+  }
+
+  getCodeOnLogin() {
+    const user = localStorage.getItem('userInformation');
+    const dist = localStorage.getItem('distribInformation');
+    if (user !== null) {
+      this.customerID  = JSON.parse(user).userInfor.customerID;
+      console.log('roles ' + this.customerID)
+    } else {
+
+    }
+    if (this.customerID === '100000') {
+     this.code = JSON.parse(user).userInfor.userID
+    } else if (this.customerID === '' ) {
+      this.code = JSON.parse(dist).distributorCode;
+    } else {
+      this.code = this.customerID;
+    }
+
+    return this.code;
   }
 
 }

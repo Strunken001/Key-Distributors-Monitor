@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { DashboardService } from 'Services/dashboard-Services/dashboard.service';
+import { Observable } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,6 +10,10 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  prinForm = new FormControl();
+  disForm = new FormControl();
+  startDate = new FormControl();
+  endDate = new FormControl();
 
   date = new FormControl(new Date());
   options = {
@@ -80,10 +87,21 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  allStocks$: Observable<any>
 
-  constructor() { }
+  constructor(public stockDetails: DashboardService, public datepipe: DatePipe) { }
 
   ngOnInit() {
+    this.allStocks$ = this.stockDetails.stock();
   }
 
+  getStockDetails() {
+    console.log(this.prinForm.value);
+    console.log(this.disForm.value);
+    console.log(this.startDate.value);
+    console.log(this.endDate.value);
+    this.stockDetails.StocDetailsCache$ = null;
+    this.allStocks$ = this.stockDetails.stock(this.datepipe.transform(this.startDate.value, 'yyyy-MM-dd'),
+    this.datepipe.transform(this.endDate.value, 'yyyy-MM-dd'), this.disForm.value, 'DISTRIBUTOR' );
+  }
 }

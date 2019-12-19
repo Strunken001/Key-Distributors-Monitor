@@ -6,6 +6,7 @@ import { DashboardComponent } from './container/dashboard.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { MaterialUiModule } from 'Utilities/_material/material-ui.module';
 import { ComponentsModule } from 'app/components/components.module';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,7 +16,9 @@ import { ComponentsModule } from 'app/components/components.module';
     DashboardRoutingModule,
     NgApexchartsModule,
     MaterialUiModule,
-    ComponentsModule
+    ComponentsModule,
+    FormsModule,
+    ReactiveFormsModule
 
   ]
 })

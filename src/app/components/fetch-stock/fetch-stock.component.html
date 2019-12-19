@@ -1,4 +1,4 @@
-<div class="row" *ngIf = "stockDetails.stock | async as data ">
+<div class="row" *ngIf = "allStocks$ | async as data ">
     <div class="col-lg-2 col-md-4 col-sm-4">
         <div class="card card-stats">
             <div class="card-header card-header-warning card-header-icon">
@@ -59,7 +59,7 @@
             </div>
             <div class="card-footer">
                 <div class="stats">
-                    134
+                    {{data.distributorCount}}
                 </div>
             </div>
         </div>

@@ -8,7 +8,7 @@
                 </div>
                 <mat-form-field *ngIf="profileserv.categories | async as data" class="card-body">
                     <mat-label>Principals</mat-label>
-                    <mat-select (selectionChange) = "onSelected($event.value)">
+                    <mat-select (selectionChange) = "onSelected($event.value)" [formControl]="prinForm">
                         <mat-option *ngFor="let food of data" [value]="food.customerID">
                             {{food.customerID}}
                         </mat-option>
@@ -25,7 +25,7 @@
                 </div>
                 <mat-form-field  class="card-body">
                     <mat-label>Distributors</mat-label>
-                    <mat-select>
+                    <mat-select [formControl]="disForm">
                         <mat-option *ngFor="let food of distributors" [value]="food.distributorCode">
                             {{food.distributorName}}
                         </mat-option>
@@ -43,22 +43,28 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <mat-form-field class="card-body">
+                        <mat-form-field class="card-body" (click)="picker1.open()">
 
-                            <input matInput [matDatepicker]="picker1" placeholder="Start date">
+                            <input matInput [formControl]="startDate" [matDatepicker]="picker1" placeholder="Start date">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                             <mat-datepicker #picker1></mat-datepicker>
                         </mat-form-field>
                     </div>
                     <div class="col-md-4">
-                        <mat-form-field class="card-body">
-                            <input matInput [matDatepicker]="picker2" placeholder="End date">
+                        <mat-form-field class="card-body" (click)="picker2.open()">
+                            <input matInput [formControl]="endDate" [matDatepicker]="picker2" placeholder="End date">
                             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                             <mat-datepicker #picker2></mat-datepicker>
                         </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card-body">
+                                <button type="button" class="btn btn-md btn-primary" (click)="getStockDetails()">filter</button>
+                        </div>                       
                     </div>
                 </div>
             </div>
 
         </div>
     </div>
+    

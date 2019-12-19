@@ -8,12 +8,15 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { TopviewComponent } from './topview/topview.component';
 import { MaterialUiModule } from 'Utilities/_material/material-ui.module';
 import { FetchStockComponent } from './fetch-stock/fetch-stock.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    MaterialUiModule
+    MaterialUiModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     FooterComponent,

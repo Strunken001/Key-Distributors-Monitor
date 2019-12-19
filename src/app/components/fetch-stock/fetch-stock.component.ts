@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DashboardService } from 'Services/dashboard-Services/dashboard.service';
+import { StockResponse } from 'Utilities/_models/Interface';
+import { RolesService } from 'Services/utility-Services/roles.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-fetch-stock',
@@ -7,10 +10,20 @@ import { DashboardService } from 'Services/dashboard-Services/dashboard.service'
   styleUrls: ['./fetch-stock.component.scss']
 })
 export class FetchStockComponent implements OnInit {
-
-  constructor( public stockDetails: DashboardService) { }
+  // date = new Date();
+  // request = {
+  //   StartDate: this.date.setDate(7) ,
+  //   EndDate: Date.now,
+  //   User: this.roles.DetermineRoles()
+  // }
+  @Input() allStocks$: Observable<any>
+  constructor(public stockDetails: DashboardService) { }
 
   ngOnInit() {
+  }
+
+  callFetchStockServ(request: any) {
+    this.allStocks$ = this.stockDetails.stock();
   }
 
 }
