@@ -100,7 +100,7 @@ export class ProfilingServiceService {
 
   }
 
-  private fetchDistributors() {
+  fetchDistributors(principalCode: string) {
     const rawreq = this.enc.getRequestID();
     console.log('Destributor Request ID::' + JSON.stringify(rawreq));
     const userDetails = localStorage.getItem('userInformation');
@@ -110,7 +110,7 @@ export class ProfilingServiceService {
       RequestId: this.enc.encrypt(this.enc.getRequestID()),
       Channel: 'KD',
       UserId: this.enc.encrypt(userObj.userInfor.userID),
-      PrincipalCode: this.enc.encrypt(userObj.userInfor.customerID)
+      PrincipalCode: this.enc.encrypt(principalCode)
 
     };
     console.log('Data for distributor profiling:' + JSON.stringify(userRequest));
@@ -119,18 +119,7 @@ export class ProfilingServiceService {
       catchError(this.errorhandler.handleError),
       // tslint:disable-next-line: no-shadowed-variable
       map((res: ResponseDistributor) => {
-        if (res.responseCode === '00') {
-          console.log('Principal ' + JSON.stringify(res.allDistributors) )
-          return res.allDistributors;
-        } else if (res.responseCode === '25') {
-          res.allDistributors =  [
-
-          ];
-          return res.allDistributors;
-        } else {
-          console.log('fail ' + JSON.stringify(res) )
-          return null;
-        }
+        return res;
       })
     );
 
@@ -149,17 +138,5 @@ export class ProfilingServiceService {
     return this.paymentCategoriesCache$;
   }
 
-  get distributors() {
-    if (!this.distributorCategoriesCache$) {
-       // this.paymentService.paymentInfo$.next('loading payment categories..');
-      const timer$ = timer(0, environment.CACHE_SIZE); // timer that determines the interval before data refresh from server
-      this.distributorCategoriesCache$ = timer$.pipe(
-        distinctUntilChanged(),
-        switchMap(_ => this.fetchDistributors()), // Observable operator that makes data refresh
-        shareReplay(environment.CACHE_SIZE) // Observable operator that handles caching
-      );
-    }
-    return this.distributorCategoriesCache$;
-  }
 
 }

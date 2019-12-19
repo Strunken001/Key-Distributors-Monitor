@@ -140,7 +140,7 @@ export class LoginComponent implements OnInit {
   }
 
   localStorageUserData(userinfo: User) {
-    localStorage.clear();
+    this.loginService.clear();
     localStorage.setItem(this.USERINFORMATION, JSON.stringify(userinfo));
     localStorage.setItem(this.TOKEN, userinfo.userInfor.sessionId);
     this.router.navigate(['portal']);

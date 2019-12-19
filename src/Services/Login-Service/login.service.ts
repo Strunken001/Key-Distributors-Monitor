@@ -7,6 +7,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { LoginInfo, User, LoginDist, ResponseDist } from 'Utilities/_models/Interface';
+import { ProfilingServiceService } from 'Services/Profiling-Services/profiling-service.service';
+import { DashboardService } from 'Services/dashboard-Services/dashboard.service';
 
 
 @Injectable({
@@ -20,7 +22,9 @@ export class LoginService {
               private err: ErrorHandlingService,
               private http: HttpClient,
               private toastr: ToastrService,
-              private router: Router ) { }
+              private router: Router,
+              private profilin: ProfilingServiceService ,
+              private dashboard: DashboardService) { }
 
   login(data: LoginInfo) {
     data.accessCode = this.encryptData.encrypt(data.accessCode);
@@ -71,6 +75,8 @@ export class LoginService {
 
     clear(): void {
       localStorage.clear();
+      this.profilin.paymentCategoriesCache$ = null
+      this.dashboard.StocDetailsCache$ = null
     }
 
     logout(): void {

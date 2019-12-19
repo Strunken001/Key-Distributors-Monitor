@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { ROUTES } from '../sidebar/sidebar.component';
+import { ROUTESStaff } from '../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { Router } from '@angular/router';
 import { LoginService } from 'Services/Login-Service/login.service';
@@ -18,13 +18,13 @@ export class NavbarComponent implements OnInit {
 
     constructor(location: Location,
         private element: ElementRef,
-        private router: Router,public loginService: LoginService) {
+        private router: Router, public loginService: LoginService) {
       this.location = location;
           this.sidebarVisible = false;
     }
 
     ngOnInit() {
-      this.listTitles = ROUTES.filter(listTitle => listTitle);
+      this.listTitles = ROUTESStaff.filter(listTitle => listTitle);
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
       this.router.events.subscribe((event) => {
@@ -67,7 +67,7 @@ export class NavbarComponent implements OnInit {
         const body = document.getElementsByTagName('body')[0];
 
         const $layer = document.createElement('div');
-        if (this.mobile_menu_visible == 1) {
+        if (this.mobile_menu_visible === 1) {
             // $('html').removeClass('nav-open');
             body.classList.remove('nav-open');
             if ($layer) {

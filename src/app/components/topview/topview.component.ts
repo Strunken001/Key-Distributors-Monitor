@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {  ResponsePrincipals } from 'Utilities/_models/Interface';
+import { ResponseDistributor, AllDistributor, User } from 'Utilities/_models/Interface';
 import { ProfilingServiceService } from 'Services/Profiling-Services/profiling-service.service';
 import { JsonPipe } from '@angular/common';
+import { RolesService } from 'Services/utility-Services/roles.service';
 
 @Component({
   selector: 'app-topview',
@@ -10,12 +11,47 @@ import { JsonPipe } from '@angular/common';
 })
 export class TopviewComponent implements OnInit {
 
-  foods: any[];
+  distributors: any[];
+  customerID = '';
+  userDetails: User;
+  isDistributor = true;
+  isPrincipal = true;
+  isStaff = true;
 
-  constructor(public profileserv: ProfilingServiceService) { }
+  constructor(public profileserv: ProfilingServiceService,
+    public roleServ: RolesService) {
+    const user = localStorage.getItem('userInformation');
+    if (user !== null) {
+      this.customerID = JSON.parse(user).userInfor.customerID;
+    }
+  }
 
   ngOnInit() {
+    if (this.customerID === '100000') {
+      this.isStaff = false
+    } else if (this.customerID === '' ) {
+      this.isDistributor = false;
+    } else {
+      this.isPrincipal = false;
+    }
+  }
 
+  onSelected(categoryId: string): void {
+    console.log('Principal Code dist ' + categoryId)
+    this.profileserv.fetchDistributors(categoryId).subscribe((res: ResponseDistributor) => {
+      console.log('distributor selected change ' + JSON.stringify(res));
+      if (res.responseCode === '00') {
+        console.log('Principal ' + JSON.stringify(res.allDistributors))
+        this.distributors = res.allDistributors;
+      } else if (res.responseCode === '25') {
+        res.allDistributors = [
+        ];
+        this.distributors = res.allDistributors;
+      } else {
+        console.log('fail ' + JSON.stringify(res))
+        this.distributors = null;
+      }
+    });
   }
 
   // public fetchPrincipals() {
