@@ -44,21 +44,18 @@ export class DashboardComponent implements OnInit {
       },
     },
     series: [{
-      name: 'PRODUCT A',
-      data: [44, 55, 41, 67, 22, 43]
+      name: 'Stock Value',
+      data: [44, 55]
     }, {
-      name: 'PRODUCT B',
-      data: [13, 23, 20, 8, 13, 27]
+      name: 'Trade Debt',
+      data: [13, 23]
     }, {
-      name: 'PRODUCT C',
-      data: [11, 17, 15, 15, 21, 14]
-    }, {
-      name: 'PRODUCT D',
-      data: [21, 7, 25, 13, 22, 8]
+      name: 'Total Stock',
+      data: [11, 17]
     }],
     xaxis: {
       type: 'datetime',
-      categories: ['01/01/2011 GMT', '01/02/2011 GMT', '01/03/2011 GMT', '01/04/2011 GMT', '01/05/2011 GMT', '01/06/2011 GMT'],
+      categories: ['05/01/2019 GMT', '06/02/2019 GMT'],
     },
     legend: {
       position: 'right',

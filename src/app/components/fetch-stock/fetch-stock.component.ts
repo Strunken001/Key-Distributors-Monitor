@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DashboardService } from 'Services/dashboard-Services/dashboard.service';
-import { StockResponse } from 'Utilities/_models/Interface';
-import { RolesService } from 'Services/utility-Services/roles.service';
 import { Observable } from 'rxjs';
 
 @Component({

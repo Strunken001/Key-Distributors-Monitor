@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ResponseDistributor, AllDistributor, User } from 'Utilities/_models/Interface';
 import { ProfilingServiceService } from 'Services/Profiling-Services/profiling-service.service';
-import { JsonPipe } from '@angular/common';
+import { JsonPipe, DatePipe } from '@angular/common';
 import { RolesService } from 'Services/utility-Services/roles.service';
 import { FormControl } from '@angular/forms';
 
@@ -18,6 +18,11 @@ export class TopviewComponent implements OnInit {
   isDistributor = true;
   isPrincipal = true;
   isStaff = true;
+  disabledistdrp = true;
+  currentDate = this.datepipe.transform(Date.now(), 'yyyy-MM-dd');
+  backDate = this.datepipe.transform(Date.now(), 'yyyy-MM-dd');
+  toDate = new FormControl(this.currentDate);
+  fromDate = new FormControl(this.backDate);
 
   @Output() triggerFilter: EventEmitter<any> = new EventEmitter<any>();
   @Input() prinForm: FormControl;
@@ -25,8 +30,10 @@ export class TopviewComponent implements OnInit {
   @Input() startDate: FormControl;
   @Input() endDate: FormControl;
 
+
+
   constructor(public profileserv: ProfilingServiceService,
-    public roleServ: RolesService) {
+    public roleServ: RolesService, public datepipe: DatePipe) {
     const user = localStorage.getItem('userInformation');
     if (user !== null) {
       this.customerID = JSON.parse(user).userInfor.customerID;
@@ -42,6 +49,7 @@ export class TopviewComponent implements OnInit {
       this.isPrincipal = false;
       this.onSelected(this.roleServ.getCodeOnLogin())
     }
+    this.fromAndtoValueOnChange();
   }
 
   onSelected(categoryId: string): void {
@@ -49,12 +57,15 @@ export class TopviewComponent implements OnInit {
     this.profileserv.fetchDistributors(categoryId).subscribe((res: ResponseDistributor) => {
       console.log('distributor selected change ' + JSON.stringify(res));
       if (res.responseCode === '00') {
+        this.disabledistdrp = false;
         console.log('Principal ' + JSON.stringify(res.allDistributors))
         this.distributors = res.allDistributors;
       } else if (res.responseCode === '25') {
         res.allDistributors = [
+
         ];
         this.distributors = res.allDistributors;
+        this.disabledistdrp = true;
       } else {
         console.log('fail ' + JSON.stringify(res))
         this.distributors = null;
@@ -62,21 +73,23 @@ export class TopviewComponent implements OnInit {
     });
   }
 
-  // public fetchPrincipals() {
-
-  //   this.profileserv.fetchPrincipals().subscribe((lists: ResponsePrincipals) => {
-  //     console.log('ewa dshds ' + JSON.stringify(lists))
-  //     for (const list of lists.allPrincipals) {
-  //       this.foods = [
-  //         {value: list.id, viewValue: list.customerID},
-  //       ];
-  //   }
-
-  //   // this.foods = [ value :lists.allPrincipals]
-  //   })
-  // }
-
   getStockDetails() {
     this.triggerFilter.emit();
+  }
+
+  fromAndtoValueOnChange() {
+    this.toDate.valueChanges.subscribe(res => {
+        if (new Date(res).setHours(0, 0, 0, 0) > new Date(this.currentDate).setHours(0, 0, 0, 0)) {
+          this.toDate.reset(this.currentDate);
+        }
+    });
+
+    this.fromDate.valueChanges.subscribe(res => {
+      console.log(res);
+      const backDate: any = new Date(this.toDate.value).setTime(new Date(this.toDate.value).getTime() - (4 * 24 * 60 * 60 * 1000));
+      if (new Date(res).setHours(0, 0, 0, 0) > new Date(this.toDate.value).setHours(0, 0, 0, 0)) {
+        this.fromDate.reset(new Date(backDate));
+      }
+    });
   }
 }

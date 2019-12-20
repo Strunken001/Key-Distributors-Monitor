@@ -8,6 +8,8 @@ import { ErrorHandlingService } from 'Services/utility-Services/error-handling.s
 import { timer, Observable } from 'rxjs';
 import { RolesService } from 'Services/utility-Services/roles.service';
 import { DatePipe } from '@angular/common';
+import { read } from 'fs';
+import { RSA_NO_PADDING } from 'constants';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +21,7 @@ export class DashboardService {
     public datepipe: DatePipe) { }
 
   fetchStockDetails(startDate?: any, endDate?: any, code?: any, type?: any) {
+    console.log('Stock code passed' + code)
     const date = new Date();
     const userDetails = localStorage.getItem('userInformation');
     const userObj = JSON.parse(userDetails);
@@ -32,6 +35,8 @@ export class DashboardService {
       EndDate: endDate ? endDate : this.datepipe.transform(Date.now(), 'yyyy-MM-dd') ,
       User: type ? type : this.roles.DetermineRoles()
     };
+
+    console.log('Stock code login' + this.roles.getCodeOnLogin())
     console.log('Stock request ' + JSON.stringify(userRequest))
     return this.http.post<any>(PATH, userRequest).pipe(
       retry(2),
@@ -41,6 +46,14 @@ export class DashboardService {
         console.log('Stock response ' + JSON.stringify(res) )
         if (res.responseCode === '00') {
           console.log('Stock response ' + JSON.stringify(res) )
+          return res;
+        } else if (res.responseCode === '25') {
+          res.availedFacilityAmount = '0';
+          res.totalStock = '0';
+          res.usedFacilityAmount = '0';
+          res.distributorCount = 'No Record';
+          res.tradeDebt = '0';
+          res.stockValue = '0';
           return res;
         } else {
           console.log('fail ' + JSON.stringify(res) )

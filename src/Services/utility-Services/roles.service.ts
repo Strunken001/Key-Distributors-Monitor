@@ -36,7 +36,7 @@ export class RolesService {
       this.customerID  = JSON.parse(user).userInfor.customerID;
       console.log('roles ' + this.customerID)
     } else {
-
+      this.customerID = ''
     }
     if (this.customerID === '100000') {
      this.code = JSON.parse(user).userInfor.userID
