@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { DashboardService } from 'Services/dashboard-Services/dashboard.service';
 import { Observable } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { ResponseDistributor } from 'Utilities/_models/Interface';
+import { ProfilingServiceService } from 'Services/Profiling-Services/profiling-service.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,13 +12,19 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  // @ViewChild('chartObj', { static: false }) chart: ChartComponent;
   prinForm = new FormControl();
   disForm = new FormControl();
   startDate = new FormControl();
   endDate = new FormControl();
-
+  distributor: ResponseDistributor;
+  stockVal: any;
   date = new FormControl(new Date());
-  options = {
+  percntUtil = 0;
+  percntEff = 0;
+  distributors: any[];
+
+  options: any = {
     chart: {
       height: 350,
       type: 'bar',
@@ -43,19 +51,21 @@ export class DashboardComponent implements OnInit {
         horizontal: false,
       },
     },
-    series: [{
-      name: 'Stock Value',
-      data: [44, 55]
-    }, {
-      name: 'Trade Debt',
-      data: [13, 23]
-    }, {
-      name: 'Total Stock',
-      data: [11, 17]
-    }],
+    series: [
+    //   {
+    //   name: 'Stock Value',
+    //   data: [10]
+    // }, {
+    //   name: 'Trade Debt',
+    //   data: [12]
+    // }, {
+    //   name: 'Total Stock',
+    //   data: [14]
+    // }
+  ],
     xaxis: {
-      type: 'datetime',
-      categories: ['05/01/2019 GMT', '06/02/2019 GMT'],
+      // type: 'datetime',
+      categories: ['JAN'],
     },
     legend: {
       position: 'right',
@@ -64,12 +74,29 @@ export class DashboardComponent implements OnInit {
     fill: {
       opacity: 1
     },
-
-  }
+    // autoUpdateSeries: true
+  };
 
   options2 = {
     chart: {
-      height: 210,
+      height: 260,
+      type: 'radialBar',
+    },
+    plotOptions: {
+      radialBar: {
+        hollow: {
+          size: '60%',
+        }
+      },
+    },
+    series: [],
+    labels: ['% Efficiency'],
+
+  }
+
+  options3 = {
+    chart: {
+      height: 260,
       type: 'radialBar',
     },
     plotOptions: {
@@ -79,17 +106,51 @@ export class DashboardComponent implements OnInit {
         }
       },
     },
-    series: [70],
-    labels: ['Cricket'],
+    series: [],
+    labels: ['% Utilization'],
 
   }
 
-  allStocks$: Observable<any>
 
-  constructor(public stockDetails: DashboardService, public datepipe: DatePipe) { }
+  allStocks$: Observable<any>
+  mnthlyStocks$: Observable<any>
+
+  constructor(public stockDetails: DashboardService, public datepipe: DatePipe,
+    private cd: ChangeDetectorRef, public profileserv: ProfilingServiceService) { }
 
   ngOnInit() {
     this.allStocks$ = this.stockDetails.stock();
+    this.mnthlyStocks$ = this.stockDetails.monthlyStock();
+    // this.generateGraphArray();
+    this.allStocks();
+    this.getBarchartUtilDetails()
+  }
+
+
+  allStocks() {
+    this.stockDetails.monthlyStock().subscribe(res => {
+      console.log(res);
+      const myValue = new Array(res.map(({stockValue}) => Number(stockValue)))[0];
+      console.log(myValue);
+      this.options.series = [{
+        name: 'Stock Value',
+        data: new Array(res.map(({stockValue}) => Number(stockValue)))[0]
+      }, {
+        name: 'Trade Debt',
+        data: new Array(res.map(({tradeDebt}) => Number(tradeDebt)))[0]
+      }, {
+        name: 'Total Stock',
+        data: new Array(res.map(({totalStock}) => Number(totalStock)))[0]
+      }];
+
+      this.options.xaxis = {
+        // categories: new Array(res.map(({month}) => (month)))[0]
+        categories: new Array(res.map(({month}) => month))[0]
+      };
+      console.log(JSON.stringify(new Array(res.map(({month}) => (month)))[0]))
+    })
+
+
   }
 
   getStockDetails() {
@@ -98,7 +159,30 @@ export class DashboardComponent implements OnInit {
     console.log(this.startDate.value);
     console.log(this.endDate.value);
     this.stockDetails.StocDetailsCache$ = null;
+    this.stockDetails.MnthlyStocDetailsCache$ = null;
     this.allStocks$ = this.stockDetails.stock(this.datepipe.transform(this.startDate.value, 'yyyy-MM-dd'),
     this.datepipe.transform(this.endDate.value, 'yyyy-MM-dd'), this.disForm.value, 'DISTRIBUTOR' );
+    this.mnthlyStocks$ = this.stockDetails.monthlyStock(this.datepipe.transform(this.startDate.value, 'yyyy-MM-dd'),
+    this.datepipe.transform(this.endDate.value, 'yyyy-MM-dd'), this.disForm.value, 'DISTRIBUTOR' );
+    this.allStocks();
   }
+
+  getMnthlyStockDetails() {
+
+    this.stockDetails.MnthlyStocDetailsCache$ = null;
+    this.allStocks$ = this.stockDetails.monthlyStock(this.datepipe.transform(this.startDate.value, 'yyyy-MM-dd'),
+    this.datepipe.transform(this.endDate.value, 'yyyy-MM-dd'), this.disForm.value, 'DISTRIBUTOR' );
+  }
+
+  getBarchartUtilDetails() {
+
+    this.stockDetails.stock().subscribe(res => {
+      console.log(res);
+
+      this.options3.series = [res.percentageUtilization]
+      this.options2.series = [res.percentageEfficiency]
+
+    })
+  }
+
 }

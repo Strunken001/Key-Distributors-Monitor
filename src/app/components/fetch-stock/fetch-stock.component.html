@@ -11,7 +11,7 @@
             </div>
             <div class="card-footer">
                 <div class="stats">
-                    &#8358;{{data.stockValue}}
+                    {{data.stockValue | currency:"&#8358;":"symbol"}}
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
             </div>
             <div class="card-footer">
                 <div class="stats">
-                    &#8358;{{data.tradeDebt}}
+                    {{data.tradeDebt | currency:"&#8358;":"symbol"}}
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
             </div>
             <div class="card-footer">
                 <div class="stats">
-                    &#8358;{{data.totalStock}}
+                    {{data.totalStock | currency:"&#8358;":"symbol"}}
                 </div>
             </div>
         </div>
@@ -74,10 +74,10 @@
             </div>
             <div class="card-footer">
                 <div class="stats">
-                    Availed: &#8358;{{data.availedFacilityAmount}}
+                    Availed: {{data.availedFacilityAmount | currency:"&#8358;":"symbol"}}
                 </div>
                 <div class="stats">
-                    Used: &#8358;{{data.usedFacilityAmount}}
+                    Used: {{data.usedFacilityAmount | currency:"&#8358;":"symbol"}}
                 </div>
             </div>
         </div>

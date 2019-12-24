@@ -29,6 +29,7 @@ export class TopviewComponent implements OnInit {
   @Input() disForm: FormControl;
   @Input() startDate: FormControl;
   @Input() endDate: FormControl;
+  @Input() allDist: any[];
 
 
 
@@ -60,15 +61,21 @@ export class TopviewComponent implements OnInit {
         this.disabledistdrp = false;
         console.log('Principal ' + JSON.stringify(res.allDistributors))
         this.distributors = res.allDistributors;
+        this.allDist =  this.distributors
+        this.triggerFilter.emit(this.allDist)
       } else if (res.responseCode === '25') {
         res.allDistributors = [
 
         ];
         this.distributors = res.allDistributors;
+        this.allDist =  this.distributors
+        this.triggerFilter.emit(this.allDist)
         this.disabledistdrp = true;
       } else {
         console.log('fail ' + JSON.stringify(res))
         this.distributors = null;
+        this.allDist =  this.distributors
+        this.triggerFilter.emit(this.allDist)
       }
     });
   }

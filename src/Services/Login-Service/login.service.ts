@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EncryptionService } from '../utility-Services/encryption.service';
-import { tap, catchError, map } from 'rxjs/operators';
+import { tap, catchError, map, retry } from 'rxjs/operators';
 import { ErrorHandlingService } from '../utility-Services/error-handling.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
@@ -41,9 +41,9 @@ export class LoginService {
     return this.http
       .post<any>(this.loginUrl, data, { headers })
       .pipe(
-        // tap(res => console.log('All' + JSON.stringify(res))),
-        tap(res => console.log('SignUp triggered')),
-        catchError(() => this.err.handleError),
+        retry(2),
+        catchError(this.err.handleError),
+        // tslint:disable-next-line: no-shadowed-variable
         map((res: User) => {
           return res;
         })
@@ -64,9 +64,8 @@ export class LoginService {
     return this.http
       .post<any>(this.loginDistUrl, data, { headers })
       .pipe(
-        // tap(res => console.log('All' + JSON.stringify(res))),
-        tap(res => console.log('SignUp triggered')),
-        catchError(() => this.err.handleError),
+        retry(2),
+        catchError(this.err.handleError),
         map((res: ResponseDist) => {
           return res;
         })
@@ -77,6 +76,7 @@ export class LoginService {
       localStorage.clear();
       this.profilin.paymentCategoriesCache$ = null
       this.dashboard.StocDetailsCache$ = null
+      this.dashboard.MnthlyStocDetailsCache$ = null
     }
 
     logout(): void {

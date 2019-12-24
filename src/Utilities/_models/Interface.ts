@@ -24,6 +24,12 @@ export interface ResponsePrincipals {
   requestId: string;
 }
 
+export interface ResponseUpload {
+  responseCode: string;
+  responseDescription: string;
+  requestId: string;
+}
+
 export interface AllPrincipal {
   id: string;
   customerID: string;
@@ -127,3 +133,19 @@ export interface UserDetails {
   responseCode?: any;
   responseDescription?: any;
 }
+
+export interface AllMonthlyStockDetail {
+  month: string;
+  stockValue: string;
+  tradeDebt: string;
+  totalStock: string;
+  distributorCode?: any;
+}
+
+export interface FetchStockDetailsMonthly {
+  allMonthlyStockDetails: AllMonthlyStockDetail[];
+  responseCode: string;
+  responseDescription: string;
+  requestId: string;
+}
+
