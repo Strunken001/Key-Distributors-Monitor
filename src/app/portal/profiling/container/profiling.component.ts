@@ -64,6 +64,7 @@ export class ProfilingComponent implements OnInit {
     console.log('Form Details: ' + formdet);
     this.profileserv.profileDistributor(this.profileForm.value).subscribe((a: Profiledist) => {
       console.log(a);
+      this.profileForm.reset();
       // this.profileserv.setUserObject(a);
     });
   }

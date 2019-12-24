@@ -14,23 +14,14 @@ export interface PeriodicElement {
   // StockHolding: number;
   // TradeDebt: number;
   // Total: string;
-  name: string;
+  month: string;
   position: number;
-  weight: number;
-  symbol: string;
+  StockValue: number;
+  TradeDebt: string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
+  { position: 1, month: 'Hydrogen', StockValue: 1.0079, TradeDebt: 'H' }
 ];
 
 @Component({
@@ -76,13 +67,21 @@ export class FacilitystatsComponent implements OnInit {
       },
     },
     series: [{
-      name: 'Monthly Percentage Utilized',
-      data: [44, 55, 41, 67, 22, 43]
+      name: 'Monthly Stock Utilized',
+      // tslint:disable-next-line: radix
+      data: [parseInt(this.getMonthlyUtilization().toString())],
     }],
+    labels: [this.getUtilizationMonths().toString()],
     xaxis: {
-      type: 'datetime',
-      categories: ['01/01/2011 GMT', '01/02/2011 GMT', '01/03/2011 GMT', '01/04/2011 GMT', '01/05/2011 GMT', '01/06/2011 GMT'],
+      type: 'category',
+      categories: [this.getUtilizationMonths().toString()],
+      tickAmount: 6,
     },
+    // xaxis: {
+    //   type: 'datetime',
+    //   min: new Date('01 Mar 2012').getTime(),
+    //   tickAmount: 6,
+    // },
     legend: {
       position: 'right',
       offsetY: 40
@@ -109,7 +108,7 @@ export class FacilitystatsComponent implements OnInit {
     // series: [{ value: this.facilityInfo()}],
     // tslint:disable-next-line: radix
     series: [parseInt(this.getPercUtil()).toString()],
-    labels: ['Progress'],
+    labels: ['% Utilization'],
     responsive: [{
       breakpoint: 480,
       options: {
@@ -139,7 +138,7 @@ export class FacilitystatsComponent implements OnInit {
     // series: [{ value: this.facilityInfo()}],
     // tslint:disable-next-line: radix
     series: [parseInt(this.getPercEff()).toString()],
-    labels: ['Progress'],
+    labels: ['% Efficiency'],
 
   }
 
@@ -150,19 +149,43 @@ export class FacilitystatsComponent implements OnInit {
   ];
 
   allStocks$: Observable<any>
+  mnthlyStocks$: Observable<any>
   constructor(public stockDetails: DashboardService, public datepipe: DatePipe) { }
 
   ngOnInit() {
     this.allStocks$ = this.stockDetails.stock();
+    this.mnthlyStocks$ = this.stockDetails.monthlyStock();
+    this.getMonthlyUtilization()
+    this.getUtilizationMonths()
 
   }
 
   getPercUtil() {
-    const stockDet = localStorage.getItem('fullStockDetails')
+    const stockDet = localStorage.getItem('percentageUtil')
     const parsedStockDet = JSON.parse(stockDet)
     const percUtilization = parsedStockDet.percentageUtilization
     console.log('facility Info: ' + percUtilization)
     return percUtilization
+  }
+
+  getMonthlyUtilization() {
+    const stockDet = localStorage.getItem('MonthlyStockDetails')
+    console.log('MonthlyStockDetails: ', + stockDet)
+    const parsedStockDet = JSON.parse(stockDet)
+    // parsedStockDet.allMonthlyStockDetails = []
+    console.log('Monthly Stock Parsed: ' + JSON.stringify(parsedStockDet.allMonthlyStockDetails[0].stockValue))
+    const utilPArsed = new Array(parsedStockDet.allMonthlyStockDetails[0].stockValue)
+    console.log('Final: ' + JSON.stringify(utilPArsed))
+    return utilPArsed
+  }
+
+  getUtilizationMonths() {
+    const stockDet = localStorage.getItem('MonthlyStockDetails')
+    const parsedStockDet = JSON.parse(stockDet)
+    // parsedStockDet.allMonthlyStockDetails.month = []
+    console.log('Months Parsed: ' + JSON.stringify(parsedStockDet.allMonthlyStockDetails[0].month))
+    const monthParsed = new Array(parsedStockDet.allMonthlyStockDetails[0].month)
+    return monthParsed
   }
 
   getPercEff() {
@@ -179,21 +202,16 @@ export class FacilitystatsComponent implements OnInit {
   //     const myValue = new Array(res.map(({stockValue}) => Number(stockValue)))[0];
   //     console.log(myValue);
   //     this.options.series = [{
-  //       name: 'Stock Value',
+  //       name: 'Total Amount Drawn',
   //       data: new Array(res.map(({stockValue}) => Number(stockValue)))[0]
-  //     }, {
-  //       name: 'Trade Debt',
-  //       data: new Array(res.map(({tradeDebt}) => Number(tradeDebt)))[0]
-  //     }, {
-  //       name: 'Total Stock',
-  //       data: new Array(res.map(({totalStock}) => Number(totalStock)))[0]
   //     }];
 
-  //     // this.options.xaxis = [{
-  //     //   type: 'datetime',
-  //     //   categories: new Array(res.map(({month}) => month))[0]
-  //     // }];
-  //     console.log(JSON.stringify(this.options))
+  //     this.options.xaxis = {
+  //       type: 'datetime',
+  //       // categories: new Array(res.map(({month}) => (month)))[0]
+  //       categories: new Array(res.map(({month}) => month))[0]
+  //     };
+  //     console.log(JSON.stringify(new Array(res.map(({month}) => (month)))[0]))
   //   })
 
 

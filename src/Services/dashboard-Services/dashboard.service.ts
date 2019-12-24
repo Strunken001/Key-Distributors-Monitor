@@ -91,7 +91,7 @@ export class DashboardService {
         console.log('mnthly Stock response ' + JSON.stringify(res) )
         if (res.responseCode === '00') {
           console.log('mnthly Stock response ' + JSON.stringify(res) )
-
+          localStorage.setItem('MonthlyStockDetails', JSON.stringify(res))
           return res.allMonthlyStockDetails;
         } else if (res.responseCode === '25') {
           res.allMonthlyStockDetails = [];
