@@ -29,11 +29,11 @@ export class ProfilingComponent implements OnInit {
 
   private createProfilingForm() {
     this.profileForm = this.formBuilder.group({
-      principal: new FormControl(['', Validators.required]),
-      DistributorName: new FormControl(['', Validators.required]),
-      DistributorFacNUBAN: new FormControl(['', Validators.required]),
-      DistributorCode: new FormControl(['', Validators.required]),
-      DistributorEmail: new FormControl(['', Validators.required])
+      principal: new FormControl('', [Validators.required]),
+      DistributorName: new FormControl('', [Validators.required]),
+      DistributorFacNUBAN: new FormControl('', [Validators.required]),
+      DistributorCode: new FormControl('', [Validators.required]),
+      DistributorEmail: new FormControl('', [Validators.required])
     });
   }
 

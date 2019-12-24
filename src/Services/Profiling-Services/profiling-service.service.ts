@@ -27,7 +27,7 @@ export class ProfilingServiceService {
 
     if (principal) {
 
-      const rawreq = this.enc.getRequestID;
+      const rawreq = this.enc.getRequestID();
       console.log('Raw Request ID::' + JSON.stringify(rawreq));
       principal.RequestId = this.enc.encrypt(this.enc.getRequestID());
       principal.Channel = 'KD';
@@ -70,7 +70,7 @@ export class ProfilingServiceService {
     }
   }
 
-  private fetchPrincipals() {
+  public fetchPrincipals() {
     const rawreq = this.enc.getRequestID();
     console.log('Principal Request ID::' + JSON.stringify(rawreq));
     const userDetails = localStorage.getItem('userInformation');

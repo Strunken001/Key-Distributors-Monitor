@@ -42,9 +42,10 @@ export class DashboardService {
       catchError(this.errorhandler.handleError),
       // tslint:disable-next-line: no-shadowed-variable
       map((res: StockResponse) => {
-        console.log('Stock response ' + JSON.stringify(res) )
+        console.log('Stock response ' + JSON.stringify(res))
         if (res.responseCode === '00') {
           console.log('Stock response ' + JSON.stringify(res) )
+          localStorage.setItem('fullStockDetails', JSON.stringify(res))
           return res;
         } else if (res.responseCode === '25') {
           res.availedFacilityAmount = '0';

@@ -35,7 +35,8 @@
                             <div class="row">
                                 <div class="col-md-10">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Enter Distributor Name" type="text">
+                                        <input matInput placeholder="Enter Distributor Name" formControlName="DistributorName" type="text">
+                                        <span *ngIf="DistributorName.touched && DistributorName.invalid && DistributorName.hasError('required')" class="small text-danger">DistributorName is required</span>
                                     </mat-form-field>
                                 </div>
 
@@ -43,21 +44,24 @@
                             <div class="row">
                                 <div class="col-md-10">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Enter Distributor Facility NUBAN" type="text">
+                                        <input matInput placeholder="Enter Distributor Facility NUBAN" formControlName="DistributorFacNUBAN" type="text">
+                                        <span *ngIf="DistributorFacNUBAN.touched && DistributorFacNUBAN.invalid && DistributorFacNUBAN.hasError('required')" class="small text-danger">DistributorFacNUBAN is required</span>
                                     </mat-form-field>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-10">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Enter Distributor Code" type="text">
+                                        <input matInput placeholder="Enter Distributor Code" formControlName="DistributorCode" type="text">
+                                        <span *ngIf="DistributorCode.touched && DistributorFacNUBAN.invalid && DistributorFacNUBAN.hasError('required')" class="small text-danger">Distributor Code is required</span>
                                     </mat-form-field>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-10">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Enter Distributor Email" type="email">
+                                        <input matInput placeholder="Enter Distributor Email" formControlName="DistributorEmail" type="email">
+                                        <span *ngIf="DistributorEmail.touched && DistributorEmail.invalid && DistributorFacNUBAN.hasError('required')" class="small text-danger">Distributor Email is required</span>
                                     </mat-form-field>
                                 </div>
                             </div>
