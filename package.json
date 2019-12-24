@@ -32,7 +32,7 @@
     "@angular/router": "8.2.14",
     "@w11k/ngx-componentdestroyed": "^4.1.4",
     "ajv": "6.10.2",
-    "apexcharts": "^3.10.1",
+    "apexcharts": "^3.11.2",
     "arrive": "2.4.1",
     "bootstrap": "4.4.1",
     "bootstrap-material-design": "4.1.2",

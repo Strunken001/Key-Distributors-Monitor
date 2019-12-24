@@ -27,7 +27,7 @@ export class ProfilingServiceService {
 
     if (principal) {
 
-      const rawreq = this.enc.getRequestID;
+      const rawreq = this.enc.getRequestID();
       console.log('Raw Request ID::' + JSON.stringify(rawreq));
       principal.RequestId = this.enc.encrypt(this.enc.getRequestID());
       principal.Channel = 'KD';
@@ -50,8 +50,8 @@ export class ProfilingServiceService {
         // tslint:disable-next-line: no-shadowed-variable
         map(res => {
           console.log(res);
-          if (res.ResponseCode === '00') {
-            this.toaster.show(res.responseDescription, 'Success!', {
+          if (res.responseCode === '00') {
+            this.toaster.show('Distributor profiled successfully!', 'success!', {
               positionClass: 'toast-bottom-right',
               toastClass: 'alert alert-success alert-with-icon'
             });
@@ -70,7 +70,7 @@ export class ProfilingServiceService {
     }
   }
 
-  private fetchPrincipals() {
+  public fetchPrincipals() {
     const rawreq = this.enc.getRequestID();
     console.log('Principal Request ID::' + JSON.stringify(rawreq));
     const userDetails = localStorage.getItem('userInformation');
@@ -124,6 +124,31 @@ export class ProfilingServiceService {
     );
 
   }
+
+  // fetchDistributors(principalCode: string) {
+  //   const rawreq = this.enc.getRequestID();
+  //   console.log('Destributor Request ID::' + JSON.stringify(rawreq));
+  //   const userDetails = localStorage.getItem('userInformation');
+  //   const userObj = JSON.parse(userDetails);
+  //   const PATH = `${environment.BASE_URL}${environment.KDMonitor_Api}${'/FetchAllDistributors'}`;
+  //   const userRequest: any = {
+  //     RequestId: this.enc.encrypt(this.enc.getRequestID()),
+  //     Channel: 'KD',
+  //     UserId: this.enc.encrypt(userObj.userInfor.userID),
+  //     PrincipalCode: this.enc.encrypt(principalCode)
+
+  //   };
+  //   console.log('Data for distributor profiling:' + JSON.stringify(userRequest));
+  //   return this.http.post<any>(PATH, userRequest).pipe(
+  //     retry(2),
+  //     catchError(this.errorhandler.handleError),
+  //     // tslint:disable-next-line: no-shadowed-variable
+  //     map((res: ResponseDistributor) => {
+  //       return res;
+  //     })
+  //   );
+
+  // }
 
   get categories() {
     if (!this.paymentCategoriesCache$) {

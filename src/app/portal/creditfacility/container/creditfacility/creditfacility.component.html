@@ -1,0 +1,23 @@
+<div class="row" *ngIf = "allStocks$ | async as data ">
+    <div class="col-lg-12 col-md-7 col-sm-7">
+        <div class="card card-stats">
+            <div class="card-header card-header-warning card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">credit_card</i>
+                </div>
+                <p class="card-category">Credit Facility</p>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    Approved: &#8358;{{data.availedFacilityAmount}}
+                </div>
+                <div class="stats">
+                    Availed: &#8358;{{data.availedFacilityAmount}}
+                </div>
+                <div class="stats">
+                    Used: &#8358;{{data.usedFacilityAmount}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

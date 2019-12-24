@@ -10,6 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProfilingModule } from './portal/profiling/profiling.module'
 import { MaterialUiModule } from 'Utilities/_material/material-ui.module';
 import { DatePipe } from '@angular/common';
+import { CreditfacilityModule } from './portal/creditfacility/creditfacility.module';
+import { MatTableModule } from '@angular/material';
 
 
 
@@ -27,6 +29,7 @@ import { DatePipe } from '@angular/common';
     ToastrModule.forRoot({toastClass: 'toast toast-bootstrap-compatibility-fix'}),
     ProfilingModule,
     MaterialUiModule
+
   ],
   declarations: [
     AppComponent,

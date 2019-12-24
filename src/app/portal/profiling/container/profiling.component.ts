@@ -31,11 +31,11 @@ export class ProfilingComponent implements OnInit {
 
   private createProfilingForm() {
     this.profileForm = this.formBuilder.group({
-      principal: new FormControl(['', Validators.required]),
-      DistributorName: new FormControl(['', Validators.required]),
-      DistributorFacNUBAN: new FormControl(['', Validators.required]),
-      DistributorCode: new FormControl(['', Validators.required]),
-      DistributorEmail: new FormControl(['', Validators.required])
+      principal: new FormControl('', [Validators.required]),
+      DistributorName: new FormControl('', [Validators.required]),
+      DistributorFacNUBAN: new FormControl('', [Validators.required]),
+      DistributorCode: new FormControl('', [Validators.required]),
+      DistributorEmail: new FormControl('', [Validators.required])
     });
   }
 
@@ -66,6 +66,7 @@ export class ProfilingComponent implements OnInit {
     console.log('Form Details: ' + formdet);
     this.profileserv.profileDistributor(this.profileForm.value).pipe(takeUntil(componentDestroyed(this))).subscribe((a: Profiledist) => {
       console.log(a);
+      this.profileForm.reset();
       // this.profileserv.setUserObject(a);
     });
   }
