@@ -9,6 +9,9 @@ export class RolesService {
   userDetails: User;
   roles = '';
   code = '';
+  percntUtil = 0;
+  percntEff = 0;
+
   constructor() {
   }
 

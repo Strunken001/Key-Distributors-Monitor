@@ -16,7 +16,7 @@ export const ROUTESStaff: RouteInfo[] = [
 export const ROUTESPrincipal: RouteInfo[] = [
   { path: '/portal/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '' },
   { path: '/portal/facilitystats', title: 'Facility Stats',  icon: 'content_paste', class: '' },
-  { path: '/typography', title: 'Upload',  icon: 'library_books', class: '' },
+  { path: '/portal/Upload', title: 'Upload',  icon: 'library_books', class: '' },
 ];
 
 export const ROUTESDist: RouteInfo[] = [

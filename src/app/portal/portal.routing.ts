@@ -25,6 +25,10 @@ const routes: Routes = [
       {
         path: 'facilitystats',
         loadChildren: () => import('./facilitystats/facilitystats.module').then(m => m.FacilitystatsModule)
+      },
+      {
+        path: 'Upload',
+        loadChildren: () => import('./upload/upload.module').then(m => m.UploadModule)
       }
     ]
   }
