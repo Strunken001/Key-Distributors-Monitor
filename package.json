@@ -30,6 +30,7 @@
     "@angular/platform-browser-dynamic": "8.2.14",
     "@angular/platform-server": "8.2.14",
     "@angular/router": "8.2.14",
+    "@w11k/ngx-componentdestroyed": "^4.1.4",
     "ajv": "6.10.2",
     "apexcharts": "^3.10.1",
     "arrive": "2.4.1",
@@ -55,7 +56,7 @@
     "zone.js": "0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "0.803.20",
+    "@angular-devkit/build-angular": "^0.803.21",
     "@angular/cli": "8.3.20",
     "@angular/compiler-cli": "^8.2.14",
     "@angular/language-service": "8.2.14",

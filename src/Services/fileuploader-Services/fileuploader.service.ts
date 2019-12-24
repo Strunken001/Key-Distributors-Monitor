@@ -5,10 +5,11 @@ import * as _ from 'lodash';
 import { environment } from 'environments/environment';
 import { EncryptionService } from 'Services/utility-Services/encryption.service';
 import { RolesService } from 'Services/utility-Services/roles.service';
-import { tap, catchError, map, retry } from 'rxjs/operators';
+import { tap, catchError, map, retry, takeUntil } from 'rxjs/operators';
 import { ErrorHandlingService } from 'Services/utility-Services/error-handling.service';
 import { ResponseUpload } from 'Utilities/_models/Interface';
 import { FileConverterService } from 'Utilities/file-converter.service';
+import { componentDestroyed } from '@w11k/ngx-componentdestroyed';
 
 export enum FileQueueStatus {
   Pending,
@@ -68,7 +69,7 @@ export class FileuploaderService {
 
   // public events
   public onCompleteItem(queueObj: FileQueueObject): any {
-    return { queueObj};
+    return { queueObj };
   }
 
   // public functions
@@ -112,32 +113,18 @@ export class FileuploaderService {
 
   private _upload(queueObj: FileQueueObject) {
     // create form data for file
+    this.base64converter.onFileChanged(queueObj.file);
     const form = new FormData();
-
-    // form.append('file', queueObj.file, queueObj.file.name);
-    // console.log('File upload ' + JSON.stringify(reqqw));
-
-    // // upload file and report progress
-    // const req = new HttpRequest('POST', this.url, reqqw, {
-    //   reportProgress: true,
-    // });
-
-
-
-    // console.log('File req ' + JSON.stringify(req));
-    // upload file and report progress
-    queueObj.request = this.subscribeUpload(queueObj).subscribe(
+    queueObj.request = this.subscribeUpload(queueObj).pipe(takeUntil(componentDestroyed(this))).subscribe(
       (res: ResponseUpload) => {
-      console.log(res)
-      if (res.responseCode === '00') {
-         this._uploadComplete(queueObj);
-      } else {
-         this._uploadFailed(queueObj);
-        console.log(JSON.stringify(res.responseDescription))
-      }
-
-    });
-
+        console.log(res)
+        if (res.responseCode === '00') {
+          this._uploadComplete(queueObj);
+        } else {
+          this._uploadFailed(queueObj);
+          console.log(JSON.stringify(res.responseDescription))
+        }
+      });
     return queueObj;
   }
 
@@ -178,36 +165,52 @@ export class FileuploaderService {
   subscribeUpload(data: FileQueueObject) {
 
     let reqqw;
-    this.base64converter.onFileChanged(data.file);
-    console.log(this.base64converter.uploadedFileProperties);
-    this.base64converter.fileObservable.subscribe(resFile => {
-      console.log('file resp' + resFile);
-      if (resFile !=  null) {
-        reqqw = {
-          Channel: environment.KDChannel,
-          RequestId: this.enc.encrypt(this.enc.getRequestID()),
-          SessionId: '',
-          FileName: this.base64converter.uploadedFileProperties.name,
-          PrincipalCode: this.enc.encrypt(this.roles.getCodeOnLogin()),
-          FileContent: resFile
-        }
+    this.base64converter.fileObservable.pipe(takeUntil(componentDestroyed(this))).subscribe(resFile => {
+      if (resFile) {
+        this.contnt = resFile;
+        // console.log('file resp' + resFile);
       }
-    })
+    });
+    if (this.contnt) {
+      reqqw = {
+        Channel: environment.KDChannel,
+        RequestId: this.enc.encrypt(this.enc.getRequestID()),
+        SessionId: '',
+        FileName: this.base64converter.uploadedFileProperties.name,
+        PrincipalCode: this.enc.encrypt(this.roles.getCodeOnLogin()),
+        FileContent: this.contnt
+      }
 
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    console.log(JSON.stringify(reqqw));
-    return this.http
-      .post<any>(this.url, reqqw, { headers })
-      .pipe(
-        retry(2),
-        catchError(this.errorhandler.handleError),
-        // tslint:disable-next-line: no-shadowed-variable
-        map((res: ResponseUpload) => {
-          console.log(JSON.stringify(res))
-          return res;
-        })
-      );
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      console.log(JSON.stringify(reqqw));
+      return this.http
+        .post<any>(this.url, reqqw, { headers })
+        .pipe(
+          retry(2),
+          catchError(this.errorhandler.handleError),
+          // tslint:disable-next-line: no-shadowed-variable
+          map((res: ResponseUpload) => {
+            console.log(JSON.stringify(res))
+            return res;
+          })
+        );
+    }
   }
 
+  handleInputChange(file) {
+    const reader = new FileReader();
+    reader.onloadend = this._handleReaderLoaded.bind(this);
+    reader.readAsDataURL(file);
+  }
+
+  _handleReaderLoaded(e) {
+    const reader = e.target;
+    const base64result = reader.result.substr(reader.result.indexOf(',') + 1);
+    this.contnt = base64result;
+  }
+
+  // tslint:disable-next-line: use-life-cycle-interface
+  ngOnDestroy() {
+  }
 
 }

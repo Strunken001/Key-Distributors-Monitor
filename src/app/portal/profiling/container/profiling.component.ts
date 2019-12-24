@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { ProfilingServiceService } from '../../../../Services/Profiling-Services/profiling-service.service';
 import { Profiledist, ResponsePrincipals } from '../../../../Utilities/_models/Interface';
 import { FormValidators } from '../../../../Utilities/FormValidation';
+import { takeUntil } from 'rxjs/operators';
+import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
 
 @Component({
   selector: 'app-profiling',
@@ -62,10 +64,14 @@ export class ProfilingComponent implements OnInit {
     this.profileForm.markAllAsTouched();
     const formdet = JSON.stringify(this.profileForm.value);
     console.log('Form Details: ' + formdet);
-    this.profileserv.profileDistributor(this.profileForm.value).subscribe((a: Profiledist) => {
+    this.profileserv.profileDistributor(this.profileForm.value).pipe(takeUntil(componentDestroyed(this))).subscribe((a: Profiledist) => {
       console.log(a);
       // this.profileserv.setUserObject(a);
     });
   }
+
+    // tslint:disable-next-line: use-life-cycle-interface
+    ngOnDestroy() {
+    }
 
 }

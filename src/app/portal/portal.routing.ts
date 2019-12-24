@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PortalComponent } from './container/portal.component';
+import { RoleGuard } from 'Utilities/_guards/role-guard.service';
+import { AuthGuard } from 'Utilities/_guards/auth-guard.service';
 
 
 const routes: Routes = [
@@ -20,6 +22,8 @@ const routes: Routes = [
       },
       {
         path: 'profiling',
+        canActivate: [RoleGuard],
+        data: {role: 'STAFF'},
         loadChildren: () => import('./profiling/profiling.module').then(m => m.ProfilingModule)
       },
       {
@@ -28,6 +32,8 @@ const routes: Routes = [
       },
       {
         path: 'Upload',
+        canActivate: [RoleGuard],
+        data: {role: 'PRINCIPAL'},
         loadChildren: () => import('./upload/upload.module').then(m => m.UploadModule)
       }
     ]

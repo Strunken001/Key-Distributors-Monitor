@@ -4,7 +4,12 @@ import { User } from 'Utilities/_models/Interface';
 declare const $: any;
 
 
-
+export const ROUTES: RouteInfo[] = [
+  { path: '/portal/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '',  },
+  { path: '/portal/facilitystats', title: 'Facility Stats',  icon: 'content_paste', class: '' },
+  { path: '/portal/profiling', title: 'Profiling',  icon: 'person', class: '' },
+  { path: '/portal/Upload', title: 'Upload',  icon: 'library_books', class: '' },
+];
 
 
 export const ROUTESStaff: RouteInfo[] = [

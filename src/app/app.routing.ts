@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule, } from '@angular/common';
 import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from 'Utilities/_guards/auth-guard.service';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   },
   {
     path: 'portal',
+     canActivate: [AuthGuard],
     loadChildren: () => import('./portal/portal.module').then(m => m.PortalModule)
   },
   {

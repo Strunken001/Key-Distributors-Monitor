@@ -120,6 +120,7 @@ export class DashboardService {
   }
 
   monthlyStock(startDate?: any, endDate?: any, code?: any, type?: any) {
+
     if (!this.MnthlyStocDetailsCache$) {
        // this.paymentService.paymentInfo$.next('loading payment categories..');
       const timer$ = timer(0, environment.CACHE_SIZE); // timer that determines the interval before data refresh from server

@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { ROUTESStaff } from '../sidebar/sidebar.component';
+import { ROUTES } from '../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { Router } from '@angular/router';
 import { LoginService } from 'Services/Login-Service/login.service';
@@ -24,7 +24,7 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit() {
-      this.listTitles = ROUTESStaff.filter(listTitle => listTitle);
+      this.listTitles = ROUTES.filter(listTitle => listTitle);
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
       this.router.events.subscribe((event) => {

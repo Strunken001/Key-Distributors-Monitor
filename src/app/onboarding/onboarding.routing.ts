@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { OnboardingComponent } from './container/onboarding.component';
+import { AuthGuard } from 'Utilities/_guards/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -10,7 +11,7 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: 'login',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'login',
