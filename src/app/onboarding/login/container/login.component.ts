@@ -88,6 +88,7 @@ export class LoginComponent implements OnInit {
       FormValidators.validateAllFormFields(this.form);
       return;
     }
+
     this.showLoader = true;
     // this.loginForm.form.markAllAsTouched();
     console.log('form value' + JSON.stringify(this.form.value));

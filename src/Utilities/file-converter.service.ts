@@ -52,7 +52,7 @@ export class FileConverterService {
     fileReader.onload = (fileLoadedEvent: any) => {
       format = fileLoadedEvent.target.result.split(',')[1];
       // converted file
-      this.fileSource.next(format);
+        this.fileSource.next(format);
     };
     // Convert data to base64
     fileReader.readAsDataURL(fileToLoad);

@@ -87,65 +87,6 @@
             <div class="col-lg-4 col-md-10">
                 <div class="card">
                     <div class="card-header card-header-danger">
-                        <h4 class="card-title">Percentage Utilization</h4>
-                        <p class="card-category"></p>
-                    </div>
-
-                    <div class="row" style="padding: 18% 0;">
-                        <div class="col-md-12">
-                            <apx-chart [series]="options2.series" [chart]="options2.chart" [labels]="options2.labels">
-                            </apx-chart>
-                        </div>
-                        <!-- <div class="col-md-4">
-                                    <apx-chart [series]="options2.series" [chart]="options2.chart"></apx-chart>
-                                </div>
-                                <div class="col-md-4">
-                                    <apx-chart [series]="options2.series" [chart]="options2.chart"></apx-chart>
-                                </div> -->
-                    </div>
-
-
-
-                </div>
-            </div>
-
-        </div>
-        <div class="row">
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-                <!--- Note that these columns can be defined in any order.
-                      The actual rendered columns are set as a property on the row definition" -->
-
-                <!-- Position Column -->
-                <ng-container matColumnDef="position">
-                    <th mat-header-cell *matHeaderCellDef> No. </th>
-                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-                </ng-container>
-
-                <!-- Name Column -->
-                <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef> Month </th>
-                    <td mat-cell *matCellDef="let element"> December </td>
-                </ng-container>
-
-                <!-- Weight Column -->
-                <ng-container matColumnDef="weight">
-                    <th mat-header-cell *matHeaderCellDef> StockValue </th>
-                    <td mat-cell *matCellDef="let element"> 5,000 </td>
-                </ng-container>
-
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="symbol">
-                    <th mat-header-cell *matHeaderCellDef> TradeDebt </th>
-                    <td mat-cell *matCellDef="let element"> 9000 </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-            <div class="col-lg-4 col-md-10">
-                <div class="card">
-                    <div class="card-header card-header-danger">
                         <h4 class="card-title ">Percentage Efficiency</h4>
                         <p class="card-category"> Here is a subtitle for this table</p>
                     </div>
@@ -161,9 +102,86 @@
                             <apx-chart [series]="options2.series" [chart]="options2.chart"></apx-chart>
                         </div> -->
                     </div>
-
+    
                 </div>
             </div>
+
+        </div>
+        
+        
+        <div *ngIf="mnthlyStocks$ | async as data ">
+            <div class="row" >
+                <div class="col-lg-8 col-md-14">
+                    <div class="card">
+                        <div class="card-header card-header-danger">
+                            <h4 class="card-title ">Monthly Stock</h4>
+                            <p class="card-category">Total Stock Information by Months </p>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                        <th>
+                                            Month
+                                        </th>
+                                        <th>
+                                            Stock Value
+                                        </th>
+                                        <th>
+                                            Trade Debt
+                                        </th>
+                                        <th>
+                                            Trade Stock
+                                        </th>
+                                    </thead>
+                                    <tbody *ngFor="let tdata of data">
+                                        <tr>
+                                            <td>
+                                                {{tdata.month}}
+                                            </td>
+                                            <td>
+                                                {{tdata.stockValue | currency:"&#8358;":"symbol"}}
+                                            </td>
+                                            <td>
+                                                {{tdata.tradeDebt | currency:"&#8358;":"symbol"}}
+                                            </td>
+                                            <td>
+                                                {{tdata.totalStock | currency:"&#8358;":"symbol"}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-10">
+                    <div class="card">
+                        <div class="card-header card-header-danger">
+                            <h4 class="card-title">Percentage Utilization</h4>
+                            <p class="card-category"></p>
+                        </div>
+        
+                        <div class="row" style="padding: 18% 0;">
+                            <div class="col-md-12">
+                                <apx-chart [series]="options2.series" [chart]="options2.chart" [labels]="options2.labels">
+                                </apx-chart>
+                            </div>
+                            <!-- <div class="col-md-4">
+                                        <apx-chart [series]="options2.series" [chart]="options2.chart"></apx-chart>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <apx-chart [series]="options2.series" [chart]="options2.chart"></apx-chart>
+                                    </div> -->
+                        </div>
+        
+        
+        
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+            
         </div>
     </div>
-</div>

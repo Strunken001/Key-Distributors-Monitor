@@ -168,6 +168,7 @@ export class FacilitystatsComponent implements OnInit {
     return percUtilization
   }
 
+
   getMonthlyUtilization() {
     const stockDet = localStorage.getItem('MonthlyStockDetails')
     console.log('MonthlyStockDetails: ', + stockDet)
@@ -196,39 +197,51 @@ export class FacilitystatsComponent implements OnInit {
     return percUtilization
   }
 
-  // allStocks() {
-  //   this.stockDetails.monthlyStock().subscribe(res => {
-  //     console.log(res);
-  //     const myValue = new Array(res.map(({stockValue}) => Number(stockValue)))[0];
-  //     console.log(myValue);
-  //     this.options.series = [{
-  //       name: 'Total Amount Drawn',
-  //       data: new Array(res.map(({stockValue}) => Number(stockValue)))[0]
-  //     }];
+  allStocks() {
+    this.stockDetails.monthlyStock().subscribe(res => {
+      console.log(res);
+      const myValue = new Array(res.map(({stockValue}) => Number(stockValue)))[0];
+      console.log(myValue);
+      this.options.series = [{
+        name: 'Total Amount Drawn',
+        data: new Array(res.map(({stockValue}) => Number(stockValue)))[0]
+      }];
 
-  //     this.options.xaxis = {
-  //       type: 'datetime',
-  //       // categories: new Array(res.map(({month}) => (month)))[0]
-  //       categories: new Array(res.map(({month}) => month))[0]
-  //     };
-  //     console.log(JSON.stringify(new Array(res.map(({month}) => (month)))[0]))
-  //   })
+      this.options.xaxis = {
+        type: 'category',
+        tickAmount: 6,
+        // categories: new Array(res.map(({month}) => (month)))[0]
+        categories: new Array(res.map(({month}) => month))[0]
+      };
+      console.log(JSON.stringify(new Array(res.map(({month}) => (month)))[0]))
+    })
 
 
-  // }
+  }
+
+  getMnthlyStockDetails() {
+
+    this.stockDetails.MnthlyStocDetailsCache$ = null;
+    this.allStocks$ = this.stockDetails.monthlyStock(this.datepipe.transform(this.startDate.value, 'yyyy-MM-dd'),
+    this.datepipe.transform(this.endDate.value, 'yyyy-MM-dd'), this.disForm.value, 'DISTRIBUTOR' );
+  }
 
   renderChart() {
     const chart = new ApexCharts(document.querySelector('#chart'), this.options2);
     chart.render();
   }
-
   getStockDetails() {
     console.log(this.prinForm.value);
     console.log(this.disForm.value);
     console.log(this.startDate.value);
     console.log(this.endDate.value);
     this.stockDetails.StocDetailsCache$ = null;
+    this.stockDetails.MnthlyStocDetailsCache$ = null;
     this.allStocks$ = this.stockDetails.stock(this.datepipe.transform(this.startDate.value, 'yyyy-MM-dd'),
-      this.datepipe.transform(this.endDate.value, 'yyyy-MM-dd'), this.disForm.value, 'DISTRIBUTOR');
+    this.datepipe.transform(this.endDate.value, 'yyyy-MM-dd'), this.disForm.value, 'DISTRIBUTOR' );
+    this.mnthlyStocks$ = this.stockDetails.monthlyStock(this.datepipe.transform(this.startDate.value, 'yyyy-MM-dd'),
+    this.datepipe.transform(this.endDate.value, 'yyyy-MM-dd'), this.disForm.value, 'DISTRIBUTOR' );
+    this.allStocks();
   }
+
 }
