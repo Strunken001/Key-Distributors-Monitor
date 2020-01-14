@@ -62,6 +62,7 @@ export class ProfilingComponent implements OnInit {
     this.profileForm.markAllAsTouched();
     const formdet = JSON.stringify(this.profileForm.value);
     console.log('Form Details: ' + formdet);
+    console.log('Selected Principal: ' + this.profileForm.value.principal.selectedOption)
     this.profileserv.profileDistributor(this.profileForm.value).subscribe((a: Profiledist) => {
       console.log(a);
       this.profileForm.reset();

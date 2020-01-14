@@ -33,8 +33,8 @@ export class ProfilingServiceService {
       principal.Channel = 'KD';
       const userDetails = localStorage.getItem('userInformation');
       const userObj = JSON.parse(userDetails);
-      console.log('Adeolu beans ' + JSON.stringify(userObj.userInfor.userID));
-      principal.PrincipalCode = this.enc.encrypt(userObj.userInfor.userID);
+      console.log('Selected Principal Value: ' + principal.principal);
+      principal.PrincipalCode = this.enc.encrypt(principal.principal);
       principal.AddedBy = this.enc.encrypt(userObj.userInfor.firstName + ' ' + userObj.userInfor.lastName);
       principal.DistributorName = this.enc.encrypt(principal.DistributorName);
       principal.DistributorFacNUBAN = this.enc.encrypt(principal.DistributorFacNUBAN);

@@ -19,7 +19,7 @@
                                 <mat-form-field *ngIf="profileserv.categories | async as data" class="col-md-10">
                                     <mat-label>Select Principal</mat-label>
                                     <mat-select [(ngModel)]="selectedOption" formControlName="principal">
-                                        <mat-option *ngFor="let option of data" [value]="option.id">
+                                        <mat-option *ngFor="let option of data" [value]="option.customerID">
                                             {{option.customerID}}
                                         </mat-option>
                                     </mat-select>
