@@ -121,12 +121,15 @@ export class DashboardComponent implements OnInit {
     private cd: ChangeDetectorRef, public profileserv: ProfilingServiceService) { }
 
   ngOnInit() {
-     this.allStocks$ = this.stockDetails.stock();
      this.mnthlyStocks$ = this.stockDetails.monthlyStock();
+     this.allStocks$ = this.stockDetails.stock();
     // this.generateGraphArray();
      this.allStocks();
      this.getBarchartUtilDetails()
+
   }
+
+
 
 
   allStocks() {
@@ -167,6 +170,7 @@ export class DashboardComponent implements OnInit {
     this.mnthlyStocks$ = this.stockDetails.monthlyStock(this.datepipe.transform(this.startDate.value, 'yyyy-MM-dd'),
     this.datepipe.transform(this.endDate.value, 'yyyy-MM-dd'), this.disForm.value, 'DISTRIBUTOR' );
     this.allStocks();
+    this.getBarchartUtilDetails()
   }
 
   getMnthlyStockDetails() {
@@ -180,11 +184,11 @@ export class DashboardComponent implements OnInit {
 
     this.stockDetails.MnthlyStocDetailsCache$ = null;
     this.allStocks$.pipe(takeUntil(componentDestroyed(this))).subscribe(res => {
-      console.log(res);
 
-      this.options3.series = [res.percentageUtilization]
-      this.options2.series = [res.percentageEfficiency]
+      console.log('p EFF' + JSON.stringify(res))
 
+        this.options3.series = [res.percentageUtilization]
+        this.options2.series = [res.percentageEfficiency]
     })
   }
 

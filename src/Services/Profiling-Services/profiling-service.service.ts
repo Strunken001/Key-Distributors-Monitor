@@ -153,7 +153,7 @@ export class ProfilingServiceService {
   get categories() {
     if (!this.paymentCategoriesCache$) {
        // this.paymentService.paymentInfo$.next('loading payment categories..');
-      const timer$ = timer(0, environment.CACHE_SIZE); // timer that determines the interval before data refresh from server
+      const timer$ = timer(0, environment.REFRESH_INTERVAL); // timer that determines the interval before data refresh from server
       this.paymentCategoriesCache$ = timer$.pipe(
         distinctUntilChanged(),
         switchMap(_ => this.fetchPrincipals()), // Observable operator that makes data refresh

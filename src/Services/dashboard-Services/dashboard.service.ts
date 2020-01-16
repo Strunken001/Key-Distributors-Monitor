@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { StockResponse, FetchStockDetailsMonthly, AllMonthlyStockDetail } from 'Utilities/_models/Interface';
 import { catchError, retry, map, switchMap, shareReplay, distinctUntilChanged } from 'rxjs/operators';
 import { ErrorHandlingService } from 'Services/utility-Services/error-handling.service';
-import { timer, Observable } from 'rxjs';
+import { timer, Observable, BehaviorSubject } from 'rxjs';
 import { RolesService } from 'Services/utility-Services/roles.service';
 import { DatePipe } from '@angular/common';
 
@@ -15,6 +15,7 @@ import { DatePipe } from '@angular/common';
 })
 export class DashboardService {
   public StocDetailsCache$: Observable<StockResponse>;
+  // public piecharteff: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public MnthlyStocDetailsCache$: Observable<AllMonthlyStockDetail[]>;
   constructor(private enc: EncryptionService, private http: HttpClient,
     private errorhandler: ErrorHandlingService, private roles: RolesService,
@@ -47,7 +48,8 @@ export class DashboardService {
         localStorage.setItem('percentageUtil', JSON.stringify(res));
         if (res.responseCode === '00') {
           console.log('Stock response ' + JSON.stringify(res) )
-          localStorage.setItem('fullStockDetails', JSON.stringify(res))
+          // localStorage.setItem('fullStockDetails', JSON.stringify(res))
+          // this.piecharteff.next(res);
           return res;
         } else if (res.responseCode === '25') {
           res.availedFacilityAmount = '0';
@@ -56,10 +58,16 @@ export class DashboardService {
           res.distributorCount = 'No Record';
           res.tradeDebt = '0';
           res.stockValue = '0';
+          res.percentageEfficiency = '0';
+          res.percentageUtilization =  '0';
+         // this.piecharteff.next(res);
           return res;
         } else {
+          res.percentageEfficiency = '0';
+          res.percentageUtilization =  '0';
+          // this.piecharteff.next(res);
           console.log('fail ' + JSON.stringify(res) )
-          return null;
+          return res;
         }
       })
     );
@@ -107,7 +115,7 @@ export class DashboardService {
   stock(startDate?: any, endDate?: any, code?: any, type?: any) {
     if (!this.StocDetailsCache$) {
        // this.paymentService.paymentInfo$.next('loading payment categories..');
-      const timer$ = timer(0, environment.CACHE_SIZE); // timer that determines the interval before data refresh from server
+      const timer$ = timer(0, environment.REFRESH_INTERVAL); // timer that determines the interval before data refresh from server
       this.StocDetailsCache$ = timer$.pipe(
         distinctUntilChanged(),
         // switchMap(_ => startDate && endDate &&
@@ -124,7 +132,7 @@ export class DashboardService {
 
     if (!this.MnthlyStocDetailsCache$) {
        // this.paymentService.paymentInfo$.next('loading payment categories..');
-      const timer$ = timer(0, environment.CACHE_SIZE); // timer that determines the interval before data refresh from server
+      const timer$ = timer(0, environment.REFRESH_INTERVAL); // timer that determines the interval before data refresh from server
       this.MnthlyStocDetailsCache$ = timer$.pipe(
         distinctUntilChanged(),
         // switchMap(_ => startDate && endDate &&

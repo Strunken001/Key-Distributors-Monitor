@@ -74,9 +74,10 @@ export class LoginService {
 
     clear(): void {
       localStorage.clear();
-      this.profilin.paymentCategoriesCache$ = null
-      this.dashboard.StocDetailsCache$ = null
-      this.dashboard.MnthlyStocDetailsCache$ = null
+      this.profilin.paymentCategoriesCache$ = null;
+      this.dashboard.StocDetailsCache$ = null;
+      this.dashboard.MnthlyStocDetailsCache$ = null;
+      // this.dashboard.piecharteff = null;
     }
 
     logout(): void {
