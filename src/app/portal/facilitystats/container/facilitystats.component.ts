@@ -4,9 +4,7 @@ import { DashboardService } from 'Services/dashboard-Services/dashboard.service'
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 // import ApexCharts from 'apexcharts'
-import * as ApexCharts from 'apexcharts'
-
-
+import * as ApexCharts from 'apexcharts';
 
 
 export interface PeriodicElement {
@@ -155,6 +153,7 @@ export class FacilitystatsComponent implements OnInit {
   ngOnInit() {
     this.allStocks$ = this.stockDetails.stock();
     this.mnthlyStocks$ = this.stockDetails.monthlyStock();
+    this.allStocks();
     this.getMonthlyUtilization()
     this.getUtilizationMonths()
 
@@ -171,6 +170,8 @@ export class FacilitystatsComponent implements OnInit {
 
   getMonthlyUtilization() {
     const stockDet = localStorage.getItem('MonthlyStockDetails')
+    this.allStocks$ = this.stockDetails.stock();
+    // const stockDet = this.allStocks$;
     console.log('MonthlyStockDetails: ', + stockDet)
     const parsedStockDet = JSON.parse(stockDet)
     // parsedStockDet.allMonthlyStockDetails = []
@@ -179,6 +180,19 @@ export class FacilitystatsComponent implements OnInit {
     console.log('Final: ' + JSON.stringify(utilPArsed))
     return utilPArsed
   }
+
+  // getBarchartUtilDetails() {
+
+  //   this.stockDetails.MnthlyStocDetailsCache$ = null;
+  //   this.allStocks$.pipe(takeUntil(componentDestroyed(this))).subscribe(res => {
+
+  //     console.log('p EFF' + JSON.stringify(res))
+
+  //       this.options3.series = [res.percentageUtilization]
+  //       this.options2.series = [res.percentageEfficiency]
+  //       localStorage.setItem('percentageUtil', res.percentageUtilization)
+  //   })
+  // }
 
   getUtilizationMonths() {
     const stockDet = localStorage.getItem('MonthlyStockDetails')
@@ -190,9 +204,14 @@ export class FacilitystatsComponent implements OnInit {
   }
 
   getPercEff() {
+    let percUtilization = '';
     const stockDet = localStorage.getItem('fullStockDetails')
     const parsedStockDet = JSON.parse(stockDet)
-    const percUtilization = parsedStockDet.percentageEfficiency
+    if (!parsedStockDet) {
+      percUtilization = null
+    } else {
+      percUtilization = parsedStockDet.percentageEfficiency
+    }
     console.log('facility Info: ' + percUtilization)
     return percUtilization
   }

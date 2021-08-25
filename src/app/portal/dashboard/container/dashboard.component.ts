@@ -189,6 +189,7 @@ export class DashboardComponent implements OnInit {
 
         this.options3.series = [res.percentageUtilization]
         this.options2.series = [res.percentageEfficiency]
+        localStorage.setItem('percentageUtil', res.percentageUtilization)
     })
   }
 

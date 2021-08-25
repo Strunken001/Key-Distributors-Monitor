@@ -30,7 +30,7 @@ export class ProfilingServiceService {
       const rawreq = this.enc.getRequestID();
       console.log('Raw Request ID::' + JSON.stringify(rawreq));
       principal.RequestId = this.enc.encrypt(this.enc.getRequestID());
-      principal.Channel = 'KD';
+      principal.Channel = 'GAPS';
       const userDetails = localStorage.getItem('userInformation');
       const userObj = JSON.parse(userDetails);
       console.log('Selected Principal Value: ' + principal.principal);
@@ -78,7 +78,7 @@ export class ProfilingServiceService {
     const PATH = `${environment.BASE_URL}${environment.KDMonitor_Api}${'/FetchAllPrincipals'}`;
     const userRequest: any = {
       RequestId: this.enc.encrypt(this.enc.getRequestID()),
-      Channel: 'KD',
+      Channel: 'GAPS',
       UserId: this.enc.encrypt(userObj.userInfor.userID)
 
     };
@@ -108,7 +108,7 @@ export class ProfilingServiceService {
     const PATH = `${environment.BASE_URL}${environment.KDMonitor_Api}${'/FetchAllDistributors'}`;
     const userRequest: any = {
       RequestId: this.enc.encrypt(this.enc.getRequestID()),
-      Channel: 'KD',
+      Channel: 'GAPS',
       UserId: this.enc.encrypt(userObj.userInfor.userID),
       PrincipalCode: this.enc.encrypt(principalCode)
 
@@ -133,7 +133,7 @@ export class ProfilingServiceService {
   //   const PATH = `${environment.BASE_URL}${environment.KDMonitor_Api}${'/FetchAllDistributors'}`;
   //   const userRequest: any = {
   //     RequestId: this.enc.encrypt(this.enc.getRequestID()),
-  //     Channel: 'KD',
+  //     Channel: 'GAPS',
   //     UserId: this.enc.encrypt(userObj.userInfor.userID),
   //     PrincipalCode: this.enc.encrypt(principalCode)
 
